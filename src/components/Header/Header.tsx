@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 import Countdown from 'react-countdown';
-import { Box, VStack, Divider, Text, Container, Button, Heading } from '@chakra-ui/core';
+import { Square, Box, VStack, Divider, Text, Container, Button, Heading } from '@chakra-ui/core';
 
 import {
   getPotAmount,
@@ -12,6 +12,8 @@ import {
   openTezBlock,
 } from '../../services/beacon-service';
 import { NUMBER_OF_BLOCKS_TO_WIN } from '../../constants';
+
+import TzButtonSvg from '../../tzbutton-logo.svg';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -82,7 +84,6 @@ const Header: React.FC = () => {
       <Text opacity={0.7} fontSize="xl" mt="6">
         A social experiment on the Tezos blockchain.
       </Text>
-
       <Text fontSize="6xl">
         {!!state.leaderEndTime ? (
           <Countdown date={state.leaderEndTime} daysInHours={true} zeroPadTime={2}>
@@ -93,11 +94,10 @@ const Header: React.FC = () => {
         )}
       </Text>
 
-      <Box mt="6">
-        <Button onClick={participate} size="lg" colorScheme="blue">
-          Participate
-        </Button>
-      </Box>
+      <Square mt="6" onClick={participate}>
+        <img src={TzButtonSvg} width="200px"></img>
+      </Square>
+
       {/* <Text>Leadership start time: {state.leaderStartTime?.toString()}</Text> */}
       <Divider my={16} />
       <Text fontSize="3xl">
@@ -109,12 +109,12 @@ const Header: React.FC = () => {
       </Button>
     </>
   ) : (
-    <Box my={40}>Loading...</Box>
+    <Box my={50}>Loading...</Box>
   );
 
   return (
     <Box mb={20}>
-      <Box as="section" pt={40} pb={16}>
+      <Box as="section" pt={24} pb={16}>
         <Container>
           <Box maxW="xl" mx="auto" textAlign="center">
             {content}
