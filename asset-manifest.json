@@ -1,22 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.828f9e97.chunk.css",
-    "main.js": "/static/js/main.6c709c9a.chunk.js",
-    "main.js.map": "/static/js/main.6c709c9a.chunk.js.map",
+    "main.js": "/static/js/main.cb64a745.chunk.js",
+    "main.js.map": "/static/js/main.cb64a745.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.797fecb0.js",
     "runtime-main.js.map": "/static/js/runtime-main.797fecb0.js.map",
-    "static/js/2.708dd98a.chunk.js": "/static/js/2.708dd98a.chunk.js",
-    "static/js/2.708dd98a.chunk.js.map": "/static/js/2.708dd98a.chunk.js.map",
+    "static/js/2.9151e638.chunk.js": "/static/js/2.9151e638.chunk.js",
+    "static/js/2.9151e638.chunk.js.map": "/static/js/2.9151e638.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.14509f8d5a0fc9f038da7e02a3d7ec9f.js": "/precache-manifest.14509f8d5a0fc9f038da7e02a3d7ec9f.js",
+    "precache-manifest.f646f85b0bf06af0006e27034a6b2e1b.js": "/precache-manifest.f646f85b0bf06af0006e27034a6b2e1b.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.828f9e97.chunk.css.map": "/static/css/main.828f9e97.chunk.css.map",
-    "static/js/2.708dd98a.chunk.js.LICENSE.txt": "/static/js/2.708dd98a.chunk.js.LICENSE.txt"
+    "static/js/2.9151e638.chunk.js.LICENSE.txt": "/static/js/2.9151e638.chunk.js.LICENSE.txt",
+    "static/media/tzbutton-logo.svg": "/static/media/tzbutton-logo.0ebfeaf6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.797fecb0.js",
-    "static/js/2.708dd98a.chunk.js",
+    "static/js/2.9151e638.chunk.js",
     "static/css/main.828f9e97.chunk.css",
-    "static/js/main.6c709c9a.chunk.js"
+    "static/js/main.cb64a745.chunk.js"
   ]
 }
