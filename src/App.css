@@ -1,15 +1,9 @@
 @import url('https://rsms.me/inter/inter.css');
-@import url('https://fonts.googleapis.com/css?family=Fira+Code');
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter var', sans-serif;
     background: #fff;
   }
-}
-
-pre,
-code {
-  font-family: 'Fira Code', monospace;
 }
 
 body {
@@ -28,10 +22,4 @@ h4 {
 p,
 a {
   font-family: 'Inter var', sans-serif;
-  font-size: 20px;
-  line-height: 150%;
-  font-weight: 400;
-  margin-bottom: 0;
-  text-decoration: none;
-  color: inherit;
 }

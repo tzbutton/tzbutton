@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Faq.module.css';
 
 import {
   Link,
@@ -25,7 +24,11 @@ const catImage = (
 );
 
 const getLink = (name: string, link: string) => {
-  return <Link href={link}>{name}</Link>;
+  return (
+    <Link href={link} isExternal>
+      {name}
+    </Link>
+  );
 };
 
 const airgapLink: JSX.Element = getLink('AirGap', 'https://airgap.it/');
@@ -101,30 +104,28 @@ const FAQs = [
 ];
 
 const Faq: React.FC = () => (
-  <div className={styles.Faq}>
-    <Box as="section" py={16}>
-      <Container>
-        <Box maxW="1000px" mx="auto">
-          <Heading mb={4}>FAQs</Heading>
-          <Accordion allowToggle>
-            {FAQs.map((faq, index) => {
-              return (
-                <AccordionItem key={index}>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left">
-                      {faq.title}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                  <AccordionPanel pb={4}>{faq.description}</AccordionPanel>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </Box>
-      </Container>
-    </Box>
-  </div>
+  <Box as="section" py={16}>
+    <Container>
+      <Box maxW="1000px" mx="auto">
+        <Heading mb={4}>FAQs</Heading>
+        <Accordion allowToggle>
+          {FAQs.map((faq, index) => {
+            return (
+              <AccordionItem key={index}>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    {faq.title}
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel pb={4}>{faq.description}</AccordionPanel>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
+      </Box>
+    </Container>
+  </Box>
 );
 
 export default Faq;

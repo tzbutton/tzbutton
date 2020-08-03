@@ -1,16 +1,18 @@
 import React from 'react';
 import { FaGithub, FaEnvelope, FaTwitter } from 'react-icons/fa';
-import styles from './Footer.module.css';
 
-import { HStack, Container, Box, Flex, Button, Text, Stack, Link, Divider, Icon, useColorMode } from '@chakra-ui/core';
+import { HStack, Container, Box, Flex, Button, Text, Stack, Link, Divider, Image, useColorMode } from '@chakra-ui/core';
+
+import Beacon from '../../logos/beacon-logo.svg';
+import AirGap from '../../logos/airgap-logo.svg';
 
 const data = {
   code: [
-    { link: 'test', name: 'Frontend', icon: <FaGithub /> },
-    { link: 'test', name: 'Contract', icon: <FaGithub /> },
+    { link: 'https://github.com/tzbutton/tzbutton', name: 'Frontend', icon: <FaGithub /> },
+    { link: 'https://github.com/tzbutton/tzbutton', name: 'Contract', icon: <FaGithub /> },
   ],
-  social: [{ link: 'test', name: 'Twitter', icon: <FaTwitter /> }],
-  contact: [{ link: 'test', name: 'Email', icon: <FaEnvelope /> }],
+  social: [{ link: 'https://twitter.com/airgap_it', name: 'Twitter', icon: <FaTwitter /> }],
+  contact: [{ link: 'mailto:hi@airgap.it', name: 'Email', icon: <FaEnvelope /> }],
 };
 
 const Footer: React.FC = () => {
@@ -53,16 +55,14 @@ const Footer: React.FC = () => {
           </Stack>
         </Flex>
         <Divider borderColor="gray.300" my={4} />
-        <Flex backgroundColor="gray" justifyContent="space-between">
-          <HStack>
-            <Link to="/">
-              <Icon name="Logo" color="gray.500" w={24} />
-            </Link>
-            <Link to="/">
-              <Icon name="Logo" color="gray.500" w={24} />
-            </Link>
-          </HStack>
-        </Flex>
+        <HStack>
+          <Link href="https://airgap.it/" isExternal>
+            <Image src={AirGap} width="200px"></Image>
+          </Link>
+          <Link href="https://walletbeacon.io/" isExternal>
+            <Image src={Beacon} width="200px"></Image>
+          </Link>
+        </HStack>
         <Divider borderColor="gray.300" my={4} />
         <Container>
           <Text fontSize="xs">

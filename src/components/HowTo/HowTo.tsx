@@ -1,10 +1,14 @@
 import React from 'react';
-import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Square, Link, Container } from '@chakra-ui/core';
+import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Link, Container } from '@chakra-ui/core';
 
 import { NUMBER_OF_BLOCKS_TO_WIN, CONTRIBUTION_AMOUNT_STRING } from '../../constants';
 
 const getLink = (name: string, link: string) => {
-  return <Link href={link}>{name}</Link>;
+  return (
+    <Link href={link} isExternal>
+      {name}
+    </Link>
+  );
 };
 
 const beaconLink: JSX.Element = getLink('Beacon', 'https://www.walletbeacon.io/');

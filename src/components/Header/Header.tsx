@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Header.module.css';
 import Countdown from 'react-countdown';
 import { Square, Box, VStack, Divider, Text, Container, Button, Heading } from '@chakra-ui/core';
 
@@ -13,7 +12,7 @@ import {
 } from '../../services/beacon-service';
 import { NUMBER_OF_BLOCKS_TO_WIN } from '../../constants';
 
-import TzButtonSvg from '../../tzbutton-logo.svg';
+import TzButtonSvg from '../../logos/tzbutton-logo.svg';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -61,10 +60,12 @@ const Header: React.FC = () => {
     leaderEndTime: undefined,
   });
 
+  let interval: undefined | NodeJS.Timeout;
+
   useEffect(() => {
     console.log('setting up interval');
     refreshContractState(setState);
-    setInterval(async () => {
+    interval = setInterval(async () => {
       const hasUpdates = await checkRecentBlockForUpdates();
       if (hasUpdates) {
         refreshContractState(setState);
@@ -72,6 +73,9 @@ const Header: React.FC = () => {
     }, 10 * 1000);
     return () => {
       console.log('removing interval');
+      if (interval) {
+        clearInterval(interval);
+      }
     };
   }, []);
 
@@ -98,7 +102,6 @@ const Header: React.FC = () => {
         <img src={TzButtonSvg} width="200px"></img>
       </Square>
 
-      {/* <Text>Leadership start time: {state.leaderStartTime?.toString()}</Text> */}
       <Divider my={16} />
       <Text fontSize="3xl">
         Contract Balance: <Text as={'b'}>{state.potAmount} XTZ</Text>
