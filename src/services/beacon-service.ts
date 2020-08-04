@@ -87,3 +87,11 @@ export const openTezBlock = async () => {
 export const getPotAmount = async () => {
   return (await Tezos.tz.getBalance(TZBUTTON_CONTRACT)).shiftedBy(-6).toString();
 };
+
+export const getMyAddress = async () => {
+  const wallet = new BeaconWallet({ name: 'TzButton' });
+
+  const activeAccount = await wallet.client.getActiveAccount();
+
+  return activeAccount?.address ?? '';
+};

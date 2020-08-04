@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Countdown from 'react-countdown';
-import { Square, Box, VStack, Divider, Text, Container, Button, Heading } from '@chakra-ui/core';
+import { Image, Square, Box, Divider, Text, Container, Button, Heading, useToast } from '@chakra-ui/core';
 
 import {
   getPotAmount,
@@ -9,10 +9,12 @@ import {
   participate,
   withdraw,
   openTezBlock,
+  getMyAddress,
 } from '../../services/beacon-service';
 import { NUMBER_OF_BLOCKS_TO_WIN } from '../../constants';
 
-import TzButtonSvg from '../../logos/tzbutton-logo.svg';
+import TzButtonPressed from '../../logos/tzbutton-logo-unpressed.svg';
+import TzButtonUnpressed from '../../logos/tzbutton-logo-pressed.svg';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -36,11 +38,13 @@ interface AppState {
   leader: string;
   leaderStartTime: Date | undefined;
   leaderEndTime: Date | undefined;
+  myAddress: string;
 }
 
-const refreshContractState = async (setState: React.Dispatch<React.SetStateAction<AppState>>) => {
+const refreshContractState = async (setState: React.Dispatch<React.SetStateAction<AppState>>, toast?: any) => {
   console.log('refreshing');
   const contractState = await readStateFromContract();
+  const myAddress = await getMyAddress();
   const startDate = new Date(contractState.leadership_start_timestamp);
   setState({
     loaded: true,
@@ -48,33 +52,47 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
     leader: contractState.leader,
     leaderStartTime: startDate,
     leaderEndTime: getTargetTime(startDate),
+    myAddress,
   });
+  if (toast) {
+    toast({
+      title: 'New leader',
+      description: 'Someone just became the new leader and the countdown was reset.',
+      status: 'success',
+      duration: 6000,
+      isClosable: true,
+    });
+  }
 };
 
 const Header: React.FC = () => {
+  const toast = useToast();
   const [state, setState] = useState<AppState>({
     loaded: false,
     potAmount: '',
     leader: '',
     leaderStartTime: undefined,
     leaderEndTime: undefined,
+    myAddress: '',
   });
+  const [isPressed, setIsPressed] = useState(false);
 
-  let interval: undefined | NodeJS.Timeout;
+  const intervalRef = useRef<undefined | NodeJS.Timeout>();
 
   useEffect(() => {
     console.log('setting up interval');
+
     refreshContractState(setState);
-    interval = setInterval(async () => {
+    intervalRef.current = setInterval(async () => {
       const hasUpdates = await checkRecentBlockForUpdates();
       if (hasUpdates) {
-        refreshContractState(setState);
+        refreshContractState(setState, toast);
       }
     }, 10 * 1000);
     return () => {
       console.log('removing interval');
-      if (interval) {
-        clearInterval(interval);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
     };
   }, []);
@@ -99,14 +117,29 @@ const Header: React.FC = () => {
       </Text>
 
       <Square mt="6" onClick={participate}>
-        <img src={TzButtonSvg} width="200px"></img>
+        <Image
+          style={{ cursor: 'pointer' }}
+          src={isPressed ? TzButtonPressed : TzButtonUnpressed}
+          onMouseEnter={() => setIsPressed(true)}
+          onMouseLeave={() => setIsPressed(false)}
+          width="200px"
+          height="200px"
+        ></Image>
       </Square>
 
       <Divider my={16} />
       <Text fontSize="3xl">
         Contract Balance: <Text as={'b'}>{state.potAmount} XTZ</Text>
       </Text>
-      <Text fontSize="xl">Leader: {state.leader}</Text>
+      {state.leader === state.myAddress ? (
+        <>
+          <Text fontSize="6xl">You are currently the leader!</Text>
+          <Text fontSize="xl">{state.leader}</Text>
+        </>
+      ) : (
+        <Text fontSize="xl">Leader: {state.leader}</Text>
+      )}
+
       <Button mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
         History
       </Button>

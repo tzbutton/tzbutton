@@ -55,14 +55,16 @@ const Footer: React.FC = () => {
           </Stack>
         </Flex>
         <Divider borderColor="gray.300" my={4} />
-        <HStack>
-          <Link href="https://airgap.it/" isExternal>
-            <Image src={AirGap} width="200px"></Image>
-          </Link>
-          <Link href="https://walletbeacon.io/" isExternal>
-            <Image src={Beacon} width="200px"></Image>
-          </Link>
-        </HStack>
+        <Container>
+          <HStack>
+            <Link href="https://airgap.it/" isExternal>
+              <Image src={AirGap} width="150px"></Image>
+            </Link>
+            <Link href="https://walletbeacon.io/" isExternal>
+              <Image src={Beacon} width="150px"></Image>
+            </Link>
+          </HStack>
+        </Container>
         <Divider borderColor="gray.300" my={4} />
         <Container>
           <Text fontSize="xs">
