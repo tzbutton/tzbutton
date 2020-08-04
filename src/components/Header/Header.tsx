@@ -56,6 +56,7 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
   });
   if (toast) {
     toast({
+      position: 'top',
       title: 'New leader',
       description: 'Someone just became the new leader and the countdown was reset.',
       status: 'success',
