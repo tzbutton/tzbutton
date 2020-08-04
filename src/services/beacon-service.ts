@@ -84,6 +84,10 @@ export const openTezBlock = async () => {
   window.open(`https://carthagenet.tezblock.io/account/${TZBUTTON_CONTRACT}`, '_blank');
 };
 
+export const openBetterCallDev = async () => {
+  window.open(`https://better-call.dev/carthagenet/${TZBUTTON_CONTRACT}/code`, '_blank');
+};
+
 export const getPotAmount = async () => {
   return (await Tezos.tz.getBalance(TZBUTTON_CONTRACT)).shiftedBy(-6).toString();
 };

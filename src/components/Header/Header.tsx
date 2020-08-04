@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Countdown from 'react-countdown';
-import { Image, Square, Box, Divider, Text, Container, Button, Heading, useToast } from '@chakra-ui/core';
+import { Square, Box, Divider, Text, Container, Button, Heading, useToast } from '@chakra-ui/core';
 
 import {
   getPotAmount,
@@ -9,12 +9,13 @@ import {
   participate,
   withdraw,
   openTezBlock,
+  openBetterCallDev,
   getMyAddress,
 } from '../../services/beacon-service';
 import { NUMBER_OF_BLOCKS_TO_WIN } from '../../constants';
 
-import TzButtonPressed from '../../logos/tzbutton-logo-unpressed.svg';
-import TzButtonUnpressed from '../../logos/tzbutton-logo-pressed.svg';
+import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
+import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -118,14 +119,15 @@ const Header: React.FC = () => {
       </Text>
 
       <Square mt="6" onClick={participate}>
-        <Image
+        <img
           style={{ cursor: 'pointer' }}
           src={isPressed ? TzButtonPressed : TzButtonUnpressed}
           onMouseEnter={() => setIsPressed(true)}
           onMouseLeave={() => setIsPressed(false)}
           width="200px"
           height="200px"
-        ></Image>
+          alt="TzButton - click to participate"
+        />
       </Square>
 
       <Divider my={16} />
@@ -141,9 +143,14 @@ const Header: React.FC = () => {
         <Text fontSize="xl">Leader: {state.leader}</Text>
       )}
 
-      <Button mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
-        History
-      </Button>
+      <Container>
+        <Button mr={2} mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
+          History
+        </Button>
+        <Button mt={8} onClick={openBetterCallDev} colorScheme="blue" size="sm">
+          Contract
+        </Button>
+      </Container>
     </>
   ) : (
     <Box my={50}>Loading...</Box>
