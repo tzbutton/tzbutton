@@ -112,7 +112,10 @@ const HowTo: React.FC = () => {
               <Link href="https://airgap.it/" isExternal>
                 <Image src={AirGap} width="150px"></Image>
               </Link>
-              <Link href="https://walletbeacon.io/" isExternal>
+              <Link
+                href="https://chrome.google.com/webstore/detail/beacon-extension/gpfndedineagiepkpinficbcbbgjoenn"
+                isExternal
+              >
                 <Image src={Beacon} width="150px"></Image>
               </Link>
               <Link href="https://thanoswallet.com/" isExternal>
