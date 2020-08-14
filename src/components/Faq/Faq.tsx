@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Link,
@@ -11,18 +11,15 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-} from "@chakra-ui/core";
+} from '@chakra-ui/core';
 
-import { CONTRIBUTION_AMOUNT_STRING } from "../../constants";
+import { CONTRIBUTION_AMOUNT_STRING } from '../../constants';
 
 const catImage = (
   <>
     There are:
     <br />
-    <Image
-      src="https://source.unsplash.com/collection/139386/"
-      boxSize="200"
-    ></Image>
+    <Image src="https://source.unsplash.com/collection/139386/" boxSize="200"></Image>
   </>
 );
 
@@ -34,11 +31,8 @@ const getLink = (name: string, link: string) => {
   );
 };
 
-const airgapLink: JSX.Element = getLink("AirGap", "https://airgap.it/");
-const tzButtonGithubLink: JSX.Element = getLink(
-  "TzButton GitHub",
-  "https://github.com/tzbutton/tzbutton"
-);
+const airgapLink: JSX.Element = getLink('AirGap', 'https://airgap.it/');
+const tzButtonGithubLink: JSX.Element = getLink('TzButton GitHub', 'https://github.com/tzbutton/tzbutton');
 
 const FAQs = [
   {
@@ -47,12 +41,7 @@ const FAQs = [
   },
   {
     title: `Who developed TZButton?`,
-    description: (
-      <>
-        TZButton was developed by members of the {airgapLink} team during their
-        free time.
-      </>
-    ),
+    description: <>TZButton was developed by members of the {airgapLink} team during their free time.</>,
   },
   {
     title: `Can I press the button multiple times?`,
@@ -62,13 +51,12 @@ const FAQs = [
     title: `How is this project funded?`,
     description: (
       <>
-        This project was created on a voluntary basis during our free time. We
-        don't have any direct commercial motivation.
+        This project was created on a voluntary basis during our free time. We don't have any direct commercial
+        motivation.
         <br />
         <br />
-        The only thing that could be considered as a commercial motivation is
-        that the contracts balance is delegated to the AirGap baker. All
-        resulting baking rewards will be used to support open source software.
+        The only thing that could be considered as a commercial motivation is that the contracts balance is delegated to
+        the AirGap baker. All resulting baking rewards will be used to support open source software.
       </>
     ),
   },
@@ -76,8 +64,8 @@ const FAQs = [
     title: `Where can I find the source code of this project?`,
     description: (
       <>
-        The entire project is released using the permissive MIT license, you can
-        find the code on github: {tzButtonGithubLink}
+        The entire project is released using the permissive MIT license, you can find the code on github:{' '}
+        {tzButtonGithubLink}
       </>
     ),
   },
@@ -111,7 +99,13 @@ const FAQs = [
   },
   {
     title: `Is this dApp secure?`,
-    description: `We've put in a lot of effort to make it as easy and secure as possible (and our team is dedicated to security). It is an experiment and it should be dealt with that way. Don't participate if you cannot afford to lose the 0.2 TZ you are sending to the contract.`,
+    description: (
+      <>
+        Probably not.
+        <br />
+        Don't participate if you cannot afford to lose the 0.2 XTZ you are sending to the contract.
+      </>
+    ),
   },
 ];
 

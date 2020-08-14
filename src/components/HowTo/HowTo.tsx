@@ -65,16 +65,19 @@ const HowTo: React.FC = () => {
             </ListItem>
             <ListItem>
               Many people participate, the balance of the smart contract increases and the time each countdown lasts
-              decreases, <b>but it never hits 0</b>.
+              decreases, <b>but the countdown never hits 0</b>. Each transaction adds another{' '}
+              <b>{CONTRIBUTION_AMOUNT_STRING()}</b>, the balance grows to <b>{CONTRIBUTION_AMOUNT_STRING(12099)}</b> and
+              the countdown resets to <b>9 hours and 1 minute</b>.
             </ListItem>
             <ListItem>
               <b>5 hours and 32 minutes</b> before the countdown expires, Charlie presses the button,{' '}
               <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b> are now on the smart contract, the countdown is reset and the
-              total time is reduced by <b>around half a second</b>, which means it's now counting down from{' '}
-              <b>9 hours and 1 minute</b>.
+              total time is reduced by only <b>around half a second</b>, which means it's still counting down from{' '}
+              <b>9 hours and 1 minute</b>. The countdown now changes so little that it requires multiple transactions
+              for the countdown to decrease another second.
             </ListItem>
             <ListItem>
-              No one presses the button for more than 9 hours and 1 minute. This means Charlie is the winner.
+              No one presses the button for more than 9 hours and 1 minute. This means <b>Charlie is the winner</b>.
             </ListItem>
             <ListItem>
               Charlie can now withdraw <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b>, because he was the leader when the
