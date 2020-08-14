@@ -1,5 +1,16 @@
 import React from 'react';
-import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Container, Image, Link } from '@chakra-ui/core';
+import {
+  OrderedList,
+  ListItem,
+  UnorderedList,
+  Box,
+  Heading,
+  Divider,
+  Container,
+  Image,
+  Link,
+  HStack,
+} from '@chakra-ui/core';
 import { getLink } from '../../util';
 
 import { CONTRIBUTION_AMOUNT_STRING } from '../../constants';
@@ -7,6 +18,8 @@ import { CONTRIBUTION_AMOUNT_STRING } from '../../constants';
 import Timeline from '../../timeline.png';
 
 import AirGap from '../../logos/airgap-logo.svg';
+import Beacon from '../../logos/beacon-logo.svg';
+import Thanos from '../../logos/thanos-logo.svg';
 
 const beaconLink: JSX.Element = getLink('Beacon', 'https://www.walletbeacon.io/');
 const taquitoLink: JSX.Element = getLink('Taquito', 'https://tezostaquito.io/');
@@ -65,11 +78,20 @@ const HowTo: React.FC = () => {
       title: 'How to participate',
       description: (
         <>
-          Download a beacon compatible wallet:
-          <br />
-          <Link href="https://airgap.it/" isExternal>
-            <Image src={AirGap} width="150px"></Image>
-          </Link>
+          Download a beacon compatible wallet and click the button.
+          <Container mt="8">
+            <HStack spacing="24px">
+              <Link href="https://airgap.it/" isExternal>
+                <Image src={AirGap} width="150px"></Image>
+              </Link>
+              <Link href="https://walletbeacon.io/" isExternal>
+                <Image src={Beacon} width="150px"></Image>
+              </Link>
+              <Link href="https://thanoswallet.com/" isExternal>
+                <Image src={Thanos} width="150px"></Image>
+              </Link>
+            </HStack>
+          </Container>
         </>
       ),
     },
