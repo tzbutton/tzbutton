@@ -44,7 +44,7 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
   const contractState = await readStateFromContract();
   const myAddress = await getMyAddress();
   const startDate = new Date(contractState.leadership_start_timestamp);
-  const secondsToWin = contractState.countdown_seconds;
+  const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber();
   const endDate = new Date(startDate.getTime() + secondsToWin * 1000);
   const newState = {
     loaded: true,

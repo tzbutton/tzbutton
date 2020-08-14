@@ -1,11 +1,11 @@
-import { NetworkType } from '@airgap/beacon-sdk';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { Tezos, OpKind } from '@taquito/taquito';
+import { BigNumber } from 'bignumber.js';
 
 import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT } from '../constants';
 
 export interface ContractStorage {
-  countdown_seconds: number;
+  countdown_milliseconds: BigNumber;
   leader: string;
   leadership_start_timestamp: number;
 }
@@ -58,8 +58,6 @@ export const readStateFromContract = async (): Promise<ContractStorage> => {
 
   const contractStorage: ContractStorage = await contract.storage();
 
-  console.log(contractStorage);
-  contractStorage.countdown_seconds = (contractStorage.countdown_seconds as any).toNumber();
   return contractStorage;
 };
 
