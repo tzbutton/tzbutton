@@ -1,8 +1,12 @@
 import React from 'react';
-import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Container } from '@chakra-ui/core';
+import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Container, Image, Link } from '@chakra-ui/core';
 import { getLink } from '../../util';
 
 import { CONTRIBUTION_AMOUNT_STRING } from '../../constants';
+
+import Timeline from '../../timeline.png';
+
+import AirGap from '../../logos/airgap-logo.svg';
 
 const beaconLink: JSX.Element = getLink('Beacon', 'https://www.walletbeacon.io/');
 const taquitoLink: JSX.Element = getLink('Taquito', 'https://tezostaquito.io/');
@@ -29,6 +33,7 @@ const HowTo: React.FC = () => {
           transactions will only slightly adjust the countdown. The lowest countdown possible is 5 minutes.
           <br />
           Example:
+          <Image src={Timeline} width="800px"></Image>
           <OrderedList>
             <ListItem>
               Alice presses the button, {CONTRIBUTION_AMOUNT_STRING()} are now on the smart contract, the countdown is
@@ -53,6 +58,18 @@ const HowTo: React.FC = () => {
               has expired.
             </ListItem>
           </OrderedList>
+        </>
+      ),
+    },
+    {
+      title: 'How to participate',
+      description: (
+        <>
+          Download a beacon compatible wallet:
+          <br />
+          <Link href="https://airgap.it/" isExternal>
+            <Image src={AirGap} width="150px"></Image>
+          </Link>
         </>
       ),
     },

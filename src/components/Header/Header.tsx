@@ -14,7 +14,7 @@ import {
   getMyAddress,
   getTezBlockLinkForAddress,
 } from '../../services/beacon-service';
-import { getCountdownForNextBalance } from '../../services/countdown-service';
+// import { getCountdownForNextBalance } from '../../services/countdown-service';
 
 import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
 import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
@@ -141,8 +141,7 @@ const Header: React.FC = () => {
       </Square>
 
       <Text mt="6">
-        Click the button to become the <b>new leader</b> and decrease the countdown by{' '}
-        <b>{getCountdownForNextBalance(state.potAmount)}</b>
+        Click the button to become the <b>new leader</b> and reset the countdown.
       </Text>
 
       <Divider my={16} />
@@ -152,11 +151,10 @@ const Header: React.FC = () => {
       {state.leader === state.myAddress ? (
         <>
           <Text fontSize="6xl">
-            You are currently the leader{' '}
+            You are currently the leader!{' '}
             <span role="img" aria-label="Leader">
               🏆
             </span>
-            !
           </Text>
           <Text fontSize="xl">{leaderLink}</Text>
         </>

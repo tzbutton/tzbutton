@@ -9,7 +9,7 @@ import AirGap from '../../logos/airgap-logo.svg';
 const data = {
   code: [
     { link: 'https://github.com/tzbutton/tzbutton', name: 'Frontend', icon: <FaGithub /> },
-    { link: 'https://github.com/tzbutton/tzbutton', name: 'Contract', icon: <FaGithub /> },
+    { link: 'https://github.com/tzbutton/tzbutton-contract', name: 'Contract', icon: <FaGithub /> },
   ],
   social: [{ link: 'https://twitter.com/airgap_it', name: 'Twitter', icon: <FaTwitter /> }],
   contact: [{ link: 'mailto:hi@airgap.it', name: 'Email', icon: <FaEnvelope /> }],
