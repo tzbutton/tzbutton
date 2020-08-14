@@ -1,0 +1,50 @@
+self.__precacheManifest = (self.__precacheManifest || []).concat([
+  {
+    "revision": "987619360121eca406d6e44713977af7",
+    "url": "/index.html"
+  },
+  {
+    "revision": "2bf3c4acd193418798fc",
+    "url": "/static/css/main.513c5402.chunk.css"
+  },
+  {
+    "revision": "c79e6f4865cec51a15e8",
+    "url": "/static/js/2.40cb1f89.chunk.js"
+  },
+  {
+    "revision": "3b2fae73be71f780ae20314312277105",
+    "url": "/static/js/2.40cb1f89.chunk.js.LICENSE.txt"
+  },
+  {
+    "revision": "2bf3c4acd193418798fc",
+    "url": "/static/js/main.8107a274.chunk.js"
+  },
+  {
+    "revision": "ee42355b55fb8a02d4d9",
+    "url": "/static/js/runtime-main.797fecb0.js"
+  },
+  {
+    "revision": "38eff924dc699f1ae5aacaf376f5e9e4",
+    "url": "/static/media/airgap-logo.38eff924.svg"
+  },
+  {
+    "revision": "944018ec47b40ed55234afbcd5c67398",
+    "url": "/static/media/beacon-logo.944018ec.svg"
+  },
+  {
+    "revision": "b7b68acde3b9af0757ad03a9f4b5f6a8",
+    "url": "/static/media/thanos-logo.b7b68acd.svg"
+  },
+  {
+    "revision": "bd752602c24a770ca562239aae2eb3bb",
+    "url": "/static/media/timeline.bd752602.png"
+  },
+  {
+    "revision": "83915e22fe793e14861d121832b8ead5",
+    "url": "/static/media/tzbutton-logo-pressed.83915e22.svg"
+  },
+  {
+    "revision": "45024e1f82bad9de2809b9f3a8c31798",
+    "url": "/static/media/tzbutton-logo-unpressed.45024e1f.svg"
+  }
+]);
