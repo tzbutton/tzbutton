@@ -21,7 +21,9 @@ export const getCountdownDiffForNextBalance = (input: string): BigNumber => {
 };
 
 export const getNextCountdown = (currentCountdown: number, potAmount: string) => {
-  const countdown = new BigNumber(currentCountdown * 1000).plus(getCountdownDiffForNextBalance(potAmount));
+  const currentCountdownBn = new BigNumber(currentCountdown * 1000);
+  const countdownDiff = getCountdownDiffForNextBalance(potAmount);
+  const countdown = currentCountdownBn.minus(countdownDiff);
   return forHumans(countdown.dividedBy(1000).integerValue().toNumber());
 };
 
