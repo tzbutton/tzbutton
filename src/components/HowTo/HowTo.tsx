@@ -1,15 +1,8 @@
 import React from 'react';
-import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Link, Container } from '@chakra-ui/core';
+import { OrderedList, ListItem, UnorderedList, Box, Heading, Divider, Container } from '@chakra-ui/core';
+import { getLink } from '../../util';
 
-import { NUMBER_OF_BLOCKS_TO_WIN, CONTRIBUTION_AMOUNT_STRING } from '../../constants';
-
-const getLink = (name: string, link: string) => {
-  return (
-    <Link href={link} isExternal>
-      {name}
-    </Link>
-  );
-};
+import { CONTRIBUTION_AMOUNT_STRING } from '../../constants';
 
 const beaconLink: JSX.Element = getLink('Beacon', 'https://www.walletbeacon.io/');
 const taquitoLink: JSX.Element = getLink('Taquito', 'https://tezostaquito.io/');
@@ -26,24 +19,35 @@ const HowTo: React.FC = () => {
           <OrderedList>
             <ListItem>You will add {CONTRIBUTION_AMOUNT_STRING()} to the smart contract’s balance</ListItem>
             <ListItem>The address of the sender will become the leader</ListItem>
-            <ListItem>A countdown of {NUMBER_OF_BLOCKS_TO_WIN} minutes is reset and started</ListItem>
+            <ListItem>The countdown is reset</ListItem>
           </OrderedList>
-          The address that is set after the countdown expired will be eligible to withdraw the total balance on the
-          smart contract. Example:
+          The address that is the leader after the countdown expired will be eligible to withdraw the total balance on
+          the smart contract.
+          <br />
+          The countdown is slightly shorter the higher the contracts balance is. In the beginning, the countdown is set
+          to 24 hours. The first couple transactions will decrease the countdown a lot, but as time goes on,
+          transactions will only slightly adjust the countdown. The lowest countdown possible is 5 minutes.
+          <br />
+          Example:
           <OrderedList>
             <ListItem>
-              Alice presses the button, {CONTRIBUTION_AMOUNT_STRING()} are now on the smart contract, the countdown of{' '}
-              {NUMBER_OF_BLOCKS_TO_WIN} minutes starts.
+              Alice presses the button, {CONTRIBUTION_AMOUNT_STRING()} are now on the smart contract, the countdown is
+              reduced by {' PLACEHOLDER '}, which means it's {' PLACEHOLDER '} hours starts.
             </ListItem>
             <ListItem>
-              After 200 minutes Bob presses the button, {CONTRIBUTION_AMOUNT_STRING(2)} are now on the smart contract,
-              the countdown resets to {NUMBER_OF_BLOCKS_TO_WIN} minutes and starts.
+              Many people participate , {CONTRIBUTION_AMOUNT_STRING(1000)} are now on the smart contract, the countdown
+              is now at {' PLACEHOLDER '} minutes and starts.
+            </ListItem>
+            <ListItem>
+              After 200 minutes Bob presses the button, {CONTRIBUTION_AMOUNT_STRING(1001)} are now on the smart
+              contract, the countdown is reduced by {' PLACEHOLDER '}
+              the countdown resets to {' PLACEHOLDER '} minutes and starts.
             </ListItem>
             <ListItem>
               After 5 minutes Charlie presses the button, {CONTRIBUTION_AMOUNT_STRING(3)} are now on the smart contract,
-              the countdown resets to {NUMBER_OF_BLOCKS_TO_WIN} minutes and starts.
+              the countdown resets to {' PLACEHOLDER '} minutes and starts.
             </ListItem>
-            <ListItem>No one presses the button for more than {NUMBER_OF_BLOCKS_TO_WIN} minutes. </ListItem>
+            <ListItem>No one presses the button for more than {' PLACEHOLDER '} minutes. </ListItem>
             <ListItem>
               Charlie can now withdraw {CONTRIBUTION_AMOUNT_STRING(3)}, because he was the last leader and his countdown
               has expired.

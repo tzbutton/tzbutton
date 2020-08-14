@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Countdown from 'react-countdown';
 import { Square, Box, Divider, Text, Container, Button, Heading, useToast } from '@chakra-ui/core';
+import { getLink } from '../../util';
 
 import {
   getPotAmount,
@@ -11,8 +12,9 @@ import {
   openTezBlock,
   openBetterCallDev,
   getMyAddress,
+  getTezBlockLinkForAddress,
 } from '../../services/beacon-service';
-import { NUMBER_OF_BLOCKS_TO_WIN } from '../../constants';
+import { getCountdownForNextBalance } from '../../services/countdown-service';
 
 import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
 import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
@@ -26,12 +28,6 @@ const WinnerAnnouncement = () => (
     </Button>
   </span>
 );
-
-const getTargetTime = (start: Date) => {
-  const end = new Date(start.getTime() + NUMBER_OF_BLOCKS_TO_WIN * 60 * 1000);
-
-  return end;
-};
 
 interface AppState {
   loaded: boolean;
@@ -47,14 +43,18 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
   const contractState = await readStateFromContract();
   const myAddress = await getMyAddress();
   const startDate = new Date(contractState.leadership_start_timestamp);
-  setState({
+  const secondsToWin = contractState.countdown_seconds;
+  const endDate = new Date(startDate.getTime() + secondsToWin * 1000);
+  const newState = {
     loaded: true,
     potAmount: await getPotAmount(),
     leader: contractState.leader,
     leaderStartTime: startDate,
-    leaderEndTime: getTargetTime(startDate),
+    leaderEndTime: endDate,
     myAddress,
-  });
+  };
+  initialResolve = Promise.resolve(newState);
+  setState(newState);
   if (toast) {
     toast({
       position: 'top',
@@ -67,16 +67,24 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
   }
 };
 
+// TODO: Get rid of this
+let initialResolve = new Promise((resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
+  refreshContractState(resolve);
+});
+
+// TODO: Move this into component?
+const globalState = {
+  loaded: false,
+  potAmount: '',
+  leader: '',
+  leaderStartTime: undefined,
+  leaderEndTime: undefined,
+  myAddress: '',
+};
+
 const Header: React.FC = () => {
   const toast = useToast();
-  const [state, setState] = useState<AppState>({
-    loaded: false,
-    potAmount: '',
-    leader: '',
-    leaderStartTime: undefined,
-    leaderEndTime: undefined,
-    myAddress: '',
-  });
+  const [state, setState] = useState<AppState>(globalState);
   const [isPressed, setIsPressed] = useState(false);
 
   const intervalRef = useRef<undefined | NodeJS.Timeout>();
@@ -84,7 +92,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     console.log('setting up interval');
 
-    refreshContractState(setState);
+    initialResolve.then(setState);
     intervalRef.current = setInterval(async () => {
       const hasUpdates = await checkRecentBlockForUpdates();
       if (hasUpdates) {
@@ -97,7 +105,9 @@ const Header: React.FC = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, []);
+  }, [toast]);
+
+  const leaderLink = getLink(state.leader, getTezBlockLinkForAddress(state.leader));
 
   const content = state.loaded ? (
     <>
@@ -130,17 +140,33 @@ const Header: React.FC = () => {
         />
       </Square>
 
+      <Text mt="6">
+        Click the button to become the <b>new leader</b> and decrease the countdown by{' '}
+        <b>{getCountdownForNextBalance(state.potAmount)}</b>
+      </Text>
+
       <Divider my={16} />
       <Text fontSize="3xl">
         Contract Balance: <Text as={'b'}>{state.potAmount} XTZ</Text>
       </Text>
       {state.leader === state.myAddress ? (
         <>
-          <Text fontSize="6xl">You are currently the leader!</Text>
-          <Text fontSize="xl">{state.leader}</Text>
+          <Text fontSize="6xl">
+            You are currently the leader{' '}
+            <span role="img" aria-label="Leader">
+              🏆
+            </span>
+            !
+          </Text>
+          <Text fontSize="xl">{leaderLink}</Text>
         </>
       ) : (
-        <Text fontSize="xl">Leader: {state.leader}</Text>
+        <Text fontSize="xl">
+          <span role="img" aria-label="Leader">
+            🏆
+          </span>
+          {leaderLink}
+        </Text>
       )}
 
       <Container>

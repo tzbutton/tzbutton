@@ -6,6 +6,12 @@ import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT, RPC_URL } from '../constants'
 
 Tezos.setProvider({ rpc: RPC_URL });
 
+export interface ContractStorage {
+  countdown_seconds: number;
+  leader: string;
+  leadership_start_timestamp: number;
+}
+
 const connectToBeacon = async () => {
   // Create a new BeaconWallet instance. The options will be passed to the DAppClient constructor.
   const wallet = new BeaconWallet({ name: 'TzButton' });
@@ -54,12 +60,13 @@ export const withdraw = async (): Promise<string> => {
   return result.opHash;
 };
 
-export const readStateFromContract = async () => {
+export const readStateFromContract = async (): Promise<ContractStorage> => {
   const contract = await Tezos.contract.at(TZBUTTON_CONTRACT);
 
-  const contractStorage: any = await contract.storage();
+  const contractStorage: ContractStorage = await contract.storage();
 
   console.log(contractStorage);
+  contractStorage.countdown_seconds = (contractStorage.countdown_seconds as any).toNumber();
   return contractStorage;
 };
 
@@ -80,8 +87,12 @@ export const checkRecentBlockForUpdates = async () => {
   return newRelevantBlock;
 };
 
+export const getTezBlockLinkForAddress = (address: string = TZBUTTON_CONTRACT) => {
+  return `https://carthagenet.tezblock.io/account/${address}`;
+};
+
 export const openTezBlock = async () => {
-  window.open(`https://carthagenet.tezblock.io/account/${TZBUTTON_CONTRACT}`, '_blank');
+  window.open(getTezBlockLinkForAddress(), '_blank');
 };
 
 export const openBetterCallDev = async () => {

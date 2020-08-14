@@ -37,7 +37,7 @@ const tzButtonGithubLink: JSX.Element = getLink('TzButton GitHub', 'https://gith
 const FAQs = [
   {
     title: `Are there any fees?`,
-    description: `The only fees that are required are the transaction fees (gas cost to execute your transaction).`,
+    description: `The only fees are the transaction fees (gas cost to execute your transaction).`,
   },
   {
     title: `Who developed TZButton?`,
