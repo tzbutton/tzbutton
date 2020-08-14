@@ -145,7 +145,7 @@ const Header: React.FC = () => {
 
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown to{' '}
-        {getNextCountdown(state.countdownTime, state.potAmount)}.
+        <b>{getNextCountdown(state.countdownTime, state.potAmount)}</b>.
       </Text>
 
       <Divider my={16} />
