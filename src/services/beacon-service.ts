@@ -2,9 +2,7 @@ import { NetworkType } from '@airgap/beacon-sdk';
 import { BeaconWallet } from '@taquito/beacon-wallet';
 import { Tezos, OpKind } from '@taquito/taquito';
 
-import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT, RPC_URL } from '../constants';
-
-Tezos.setProvider({ rpc: RPC_URL });
+import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT } from '../constants';
 
 export interface ContractStorage {
   countdown_seconds: number;
@@ -19,13 +17,8 @@ const connectToBeacon = async () => {
   // Setting the wallet as the wallet provider for Taquito.
   Tezos.setWalletProvider(wallet);
 
-  // Specify the network on which the permissions will be requested.
-  const network = {
-    type: NetworkType.CARTHAGENET,
-  };
-
   // Send permission request to the connected wallet. This will either be the browser extension, or a wallet over the P2P network.
-  await wallet.requestPermissions({ network });
+  await wallet.requestPermissions();
 
   return wallet;
 };
@@ -88,7 +81,7 @@ export const checkRecentBlockForUpdates = async () => {
 };
 
 export const getTezBlockLinkForAddress = (address: string = TZBUTTON_CONTRACT) => {
-  return `https://carthagenet.tezblock.io/account/${address}`;
+  return `https://tezblock.io/account/${address}`;
 };
 
 export const openTezBlock = async () => {
@@ -96,7 +89,7 @@ export const openTezBlock = async () => {
 };
 
 export const openBetterCallDev = async () => {
-  window.open(`https://better-call.dev/carthagenet/${TZBUTTON_CONTRACT}/code`, '_blank');
+  window.open(`https://better-call.dev/mainnet/${TZBUTTON_CONTRACT}/code`, '_blank');
 };
 
 export const getPotAmount = async () => {
