@@ -8,6 +8,7 @@ import {
   Divider,
   Container,
   Image,
+  Text,
   Link,
   HStack,
 } from "@chakra-ui/core";
@@ -40,24 +41,29 @@ const HowTo: React.FC = () => {
           The TZButton experiment is controlled by a smart contract deployed on
           the Tezos blockchain. Whenever anyone presses the button three things
           will happen:
-          <OrderedList>
-            <ListItem>
-              You will add {CONTRIBUTION_AMOUNT_STRING()} to the smart
-              contract’s balance
-            </ListItem>
-            <ListItem>
-              The address of the sender will become the leader
-            </ListItem>
-            <ListItem>The countdown is reset</ListItem>
-          </OrderedList>
-          The address that is the leader after the countdown expired will be
-          eligible to withdraw the total balance on the smart contract.
-          <br />
-          The countdown is slightly shorter the higher the contracts balance is.
-          In the beginning, the countdown is set to 24 hours. The first couple
-          transactions will decrease the countdown a lot, but as time goes on,
-          transactions will only slightly adjust the countdown. The lowest
-          countdown possible is 5 minutes.
+          <Text mt="3">
+            <OrderedList>
+              <ListItem>
+                You will add {CONTRIBUTION_AMOUNT_STRING()} to the smart
+                contract’s balance
+              </ListItem>
+              <ListItem>
+                The address of the sender will become the leader
+              </ListItem>
+              <ListItem>The countdown is reset</ListItem>
+            </OrderedList>
+          </Text>
+          <Text mt="6">
+            The address that is the leader after the countdown expired will be
+            eligible to withdraw the total balance on the smart contract.
+          </Text>
+          <Text mt="3">
+            The countdown is slightly shorter the higher the contracts balance
+            is. In the beginning, the countdown is set to 24 hours. The first
+            couple transactions will decrease the countdown a lot, but as time
+            goes on, transactions will only slightly adjust the countdown. The
+            lowest countdown possible is 5 minutes.
+          </Text>
           <br />
           <br />
           Example:
@@ -126,31 +132,34 @@ const HowTo: React.FC = () => {
           behavior of the participating users will be automatically recorded on
           the blockchain and analyzed + published on this site, there are also
           other reasons why this experiment is interesting:
-          <UnorderedList>
-            <ListItem>
-              It showcases how easy it is for dApps to interact securely with
-              the Tezos blockchain using the existing libraries in the ecosystem
-              (like {beaconLink} and {taquitoLink})
-            </ListItem>
-            <ListItem>
-              It sets an incentive for security engineers to try to break and
-              exploit the smart contract. This could mean two things:
-              <OrderedList>
-                <ListItem>
-                  The contract and tooling used is secure and can be used as a
-                  reference for future applications.
-                </ListItem>
-                <ListItem>
-                  A breach would be transparent and recorded on the blockchain,
-                  meaning the entire community would be able to learn from it.
-                </ListItem>
-              </OrderedList>
-            </ListItem>
-            <ListItem>
-              It provides to the community an open source boilerplate/project to
-              create dApps on the Tezos Blockchain.
-            </ListItem>
-          </UnorderedList>
+          <Text mt="3">
+            <UnorderedList>
+              <ListItem>
+                It showcases how easy it is for dApps to interact securely with
+                the Tezos blockchain using the existing libraries in the
+                ecosystem (like {beaconLink} and {taquitoLink})
+              </ListItem>
+              <ListItem>
+                It sets an incentive for security engineers to try to break and
+                exploit the smart contract. This could mean two things:
+                <OrderedList>
+                  <ListItem>
+                    The contract and tooling used is secure and can be used as a
+                    reference for future applications.
+                  </ListItem>
+                  <ListItem>
+                    A breach would be transparent and recorded on the
+                    blockchain, meaning the entire community would be able to
+                    learn from it.
+                  </ListItem>
+                </OrderedList>
+              </ListItem>
+              <ListItem>
+                It provides to the community an open source boilerplate/project
+                to create dApps on the Tezos Blockchain.
+              </ListItem>
+            </UnorderedList>
+          </Text>
         </>
       ),
     },
