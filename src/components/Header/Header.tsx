@@ -1,7 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Countdown from 'react-countdown';
-import { Square, Box, Divider, Text, Container, Button, Heading, useToast } from '@chakra-ui/core';
-import { getLink } from '../../util';
+import React, { useState, useEffect, useRef } from "react";
+import Countdown from "react-countdown";
+import {
+  Square,
+  Box,
+  Divider,
+  Text,
+  Container,
+  Button,
+  Heading,
+  useToast,
+} from "@chakra-ui/core";
+import { getLink } from "../../util";
 
 import {
   getPotAmount,
@@ -13,11 +22,11 @@ import {
   openBetterCallDev,
   getMyAddress,
   getTezBlockLinkForAddress,
-} from '../../services/beacon-service';
+} from "../../services/beacon-service";
 // import { getCountdownForNextBalance } from '../../services/countdown-service';
 
-import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
-import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
+import TzButtonPressed from "../../logos/tzbutton-logo-pressed.svg";
+import TzButtonUnpressed from "../../logos/tzbutton-logo-unpressed.svg";
 
 const WinnerAnnouncement = () => (
   <span>
@@ -38,8 +47,11 @@ interface AppState {
   myAddress: string;
 }
 
-const refreshContractState = async (setState: React.Dispatch<React.SetStateAction<AppState>>, toast?: any) => {
-  console.log('refreshing');
+const refreshContractState = async (
+  setState: React.Dispatch<React.SetStateAction<AppState>>,
+  toast?: any
+) => {
+  console.log("refreshing");
   const contractState = await readStateFromContract();
   const myAddress = await getMyAddress();
   const startDate = new Date(contractState.leadership_start_timestamp);
@@ -57,10 +69,11 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
   setState(newState);
   if (toast) {
     toast({
-      position: 'top',
-      title: 'New leader',
-      description: 'Someone just became the new leader and the countdown was reset.',
-      status: 'success',
+      position: "top",
+      title: "New leader",
+      description:
+        "Someone just became the new leader and the countdown was reset.",
+      status: "success",
       duration: 6000,
       isClosable: true,
     });
@@ -68,18 +81,20 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
 };
 
 // TODO: Get rid of this
-let initialResolve = new Promise((resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
-  refreshContractState(resolve);
-});
+let initialResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
+    refreshContractState(resolve);
+  }
+);
 
 // TODO: Move this into component?
 const globalState = {
   loaded: false,
-  potAmount: '',
-  leader: '',
+  potAmount: "",
+  leader: "",
   leaderStartTime: undefined,
   leaderEndTime: undefined,
-  myAddress: '',
+  myAddress: "",
 };
 
 const Header: React.FC = () => {
@@ -90,7 +105,7 @@ const Header: React.FC = () => {
   const intervalRef = useRef<undefined | NodeJS.Timeout>();
 
   useEffect(() => {
-    console.log('setting up interval');
+    console.log("setting up interval");
 
     initialResolve.then(setState);
     intervalRef.current = setInterval(async () => {
@@ -100,14 +115,17 @@ const Header: React.FC = () => {
       }
     }, 10 * 1000);
     return () => {
-      console.log('removing interval');
+      console.log("removing interval");
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
   }, [toast]);
 
-  const leaderLink = getLink(state.leader, getTezBlockLinkForAddress(state.leader));
+  const leaderLink = getLink(
+    state.leader,
+    getTezBlockLinkForAddress(state.leader)
+  );
 
   const content = state.loaded ? (
     <>
@@ -120,17 +138,21 @@ const Header: React.FC = () => {
       </Text>
       <Text fontSize="6xl">
         {!!state.leaderEndTime ? (
-          <Countdown date={state.leaderEndTime} daysInHours={true} zeroPadTime={2}>
+          <Countdown
+            date={state.leaderEndTime}
+            daysInHours={true}
+            zeroPadTime={2}
+          >
             <WinnerAnnouncement />
           </Countdown>
         ) : (
-          'Loading...'
+          "Loading..."
         )}
       </Text>
 
       <Square mt="6" onClick={participate}>
         <img
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
           src={isPressed ? TzButtonPressed : TzButtonUnpressed}
           onMouseEnter={() => setIsPressed(true)}
           onMouseLeave={() => setIsPressed(false)}
@@ -141,19 +163,20 @@ const Header: React.FC = () => {
       </Square>
 
       <Text mt="6">
-        Click the button to become the <b>new leader</b> and reset the countdown.
+        Click the button to become the <b>new leader</b> and reset the
+        countdown.
       </Text>
 
       <Divider my={16} />
       <Text fontSize="3xl">
-        Contract Balance: <Text as={'b'}>{state.potAmount} XTZ</Text>
+        Pot Size <Text as={"b"}>{state.potAmount} XTZ</Text>
       </Text>
       {state.leader === state.myAddress ? (
         <>
           <Text fontSize="6xl">
-            You are currently the leader!{' '}
+            You are the leader!{" "}
             <span role="img" aria-label="Leader">
-              🏆
+              🥇
             </span>
           </Text>
           <Text fontSize="xl">{leaderLink}</Text>
@@ -161,14 +184,20 @@ const Header: React.FC = () => {
       ) : (
         <Text fontSize="xl">
           <span role="img" aria-label="Leader">
-            🏆
+            🥇{" "}
           </span>
           {leaderLink}
         </Text>
       )}
 
       <Container>
-        <Button mr={2} mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
+        <Button
+          mr={2}
+          mt={8}
+          onClick={openTezBlock}
+          colorScheme="blue"
+          size="sm"
+        >
           History
         </Button>
         <Button mt={8} onClick={openBetterCallDev} colorScheme="blue" size="sm">
