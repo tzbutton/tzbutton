@@ -9,12 +9,20 @@ const hoursToMillis = (input: BigNumber) => {
 const constant = hoursToMillis(new BigNumber(3));
 
 export const getCountdownForNextBalance = (input: string) => {
+  return forHumans(getCountdownDiffForNextBalance(input).dividedBy(1000).integerValue().toNumber());
+};
+
+export const getCountdownDiffForNextBalance = (input: string): BigNumber => {
   const balance = new BigNumber(input).times(10).plus(2);
 
-  console.log(`${constant.toString()} + ${balance.toString()} / ${balance.toString()}`);
   const countdownDiff = constant.plus(balance).dividedBy(balance);
 
-  return forHumans(countdownDiff.dividedBy(1000).integerValue().toNumber());
+  return countdownDiff;
+};
+
+export const getNextCountdown = (currentCountdown: number, potAmount: string) => {
+  const countdown = new BigNumber(currentCountdown * 1000).plus(getCountdownDiffForNextBalance(potAmount));
+  return forHumans(countdown.dividedBy(1000).integerValue().toNumber());
 };
 
 /**
