@@ -70,8 +70,8 @@ const HowTo: React.FC = () => {
             <ListItem>
               <b>5 hours and 32 minutes</b> before the countdown expires, Charlie presses the button,{' '}
               <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b> are now on the smart contract, the countdown is reset and the
-              total time is reduced by <b>1 minutes</b>, which means it's now counting down from{' '}
-              <b>21 hours and 45 minutes</b>.
+              total time is reduced by <b>around half a second</b>, which means it's now counting down from{' '}
+              <b>9 hours and 1 minute</b>.
             </ListItem>
             <ListItem>
               No one presses the button for more than 9 hours and 1 minute. This means Charlie is the winner.
