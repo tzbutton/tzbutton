@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import theme from '@chakra-ui/theme';
 
+import Navigation from './components/Navigation/Navigation';
 import Header from './components/Header/Header';
 import HowTo from './components/HowTo/HowTo';
 import Faq from './components/Faq/Faq';
@@ -15,6 +16,7 @@ class App extends React.Component<{}> {
     return (
       <ChakraProvider theme={theme}>
         <CSSReset />
+        <Navigation></Navigation>
         <Stack minH="90vh">
           <Header></Header>
           <HowTo></HowTo>
