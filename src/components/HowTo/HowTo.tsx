@@ -11,6 +11,7 @@ import {
   Text,
   Link,
   HStack,
+  Code,
 } from '@chakra-ui/core';
 import { getLink } from '../../util';
 
@@ -81,7 +82,7 @@ const HowTo: React.FC = () => {
             </ListItem>
             <ListItem>
               Charlie can now withdraw <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b>, because he was the leader when the
-              countdown.
+              countdown expired.
             </ListItem>
           </OrderedList>
         </>
@@ -107,6 +108,13 @@ const HowTo: React.FC = () => {
                 <Image src={Thanos} width="150px"></Image>
               </Link>
             </HStack>
+          </Container>
+          <Text mt={8}>Using the CLI (more advanced users)</Text>
+          <Container mt={4}>
+            <Code>
+              $ tezos-client remember contract tzbutton KT1L5XZbKeMXFDJuwr1zcFzkamTWf7kk6LRd
+              <br />$ tezos-client transfer 0.2 from myalias to tzbutton
+            </Code>
           </Container>
         </>
       ),
