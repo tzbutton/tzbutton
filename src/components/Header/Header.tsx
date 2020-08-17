@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Countdown from 'react-countdown';
 import { Square, Box, Divider, Text, Container, Button, Heading, useToast, Link } from '@chakra-ui/core';
 import { getLink } from '../../util';
+import TzButton from '../TzButton/TzButton';
 
 import {
   getPotAmount,
@@ -15,9 +16,6 @@ import {
   getTezBlockLinkForAddress,
 } from '../../services/beacon-service';
 import { getNextCountdown } from '../../services/countdown-service';
-
-import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
-import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -88,7 +86,6 @@ const globalState = {
 const Header: React.FC = () => {
   const toast = useToast();
   const [state, setState] = useState<AppState>(globalState);
-  const [isPressed, setIsPressed] = useState(false);
 
   const intervalRef = useRef<undefined | NodeJS.Timeout>();
 
@@ -117,7 +114,6 @@ const Header: React.FC = () => {
       <Heading as="h1" size="xl" fontWeight="semibold">
         TzButton
       </Heading>
-
       <Text opacity={0.7} fontSize="xl" mt="6">
         A social experiment on the Tezos blockchain.
       </Text>
@@ -130,24 +126,13 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-
       <Square mt="6" onClick={participate}>
-        <img
-          style={{ cursor: 'pointer' }}
-          src={isPressed ? TzButtonPressed : TzButtonUnpressed}
-          onMouseEnter={() => setIsPressed(true)}
-          onMouseLeave={() => setIsPressed(false)}
-          width="200px"
-          height="200px"
-          alt="TzButton - click to participate"
-        />
+        <TzButton />
       </Square>
-
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown to
         <br /> <b>{getNextCountdown(state.countdownTime, state.potAmount)}</b>.
       </Text>
-
       <Divider my={16} />
       <Text fontSize="3xl">
         Pot Size <Text as={'b'}>{state.potAmount} XTZ</Text>
@@ -170,7 +155,6 @@ const Header: React.FC = () => {
           {leaderLink}
         </Text>
       )}
-
       <Container>
         <Button mr={2} mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
           History
@@ -179,12 +163,10 @@ const Header: React.FC = () => {
           Contract
         </Button>
       </Container>
-
       <Text opacity={0.7} mt="10">
         Disclaimer: This is an experiment with an unaudited smart contract, consider the funds you send to the contract
         as lost.
       </Text>
-
       <Text opacity={0.7} mt="10">
         <Link href="https://github.com/tzbutton/tzbutton-contract/issues/1" isExternal>
           Conclusion of Round 1
