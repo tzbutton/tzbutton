@@ -12,7 +12,6 @@ import {
   Link,
   Divider,
   Image,
-  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/core';
 
@@ -43,8 +42,6 @@ const data = {
 };
 
 const Footer: React.FC = () => {
-  const { colorMode } = useColorMode();
-
   const bg = useColorModeValue('gray.100', 'gray.100');
   const color = useColorModeValue('black', 'gray.800');
 

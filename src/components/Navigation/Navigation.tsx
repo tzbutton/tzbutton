@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Link, Flex, IconButton, HStack, useColorMode, useColorModeValue } from '@chakra-ui/core';
 
-import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
+import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa';
 
 const Navigation: React.FC = () => {
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -13,6 +13,20 @@ const Navigation: React.FC = () => {
       <Box alignItems="center" flexGrow={1}></Box>
       <Flex align="center" color="gray.400">
         <HStack spacing="2">
+          <Link
+            href="https://t.me/TezosNotifierBot?start=tzbutton_KT1L5XZbKeMXFDJuwr1zcFzkamTWf7kk6LRd_TzButton"
+            isExternal
+          >
+            <IconButton
+              size="md"
+              fontSize="lg"
+              aria-label={`Get notified about updates`}
+              variant="ghost"
+              color="current"
+              ml="3"
+              icon={<FaBell />}
+            />
+          </Link>
           <Link href="https://github.com/AndreasGassmann/tztip.me" isExternal>
             <IconButton
               size="md"
