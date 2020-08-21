@@ -12,6 +12,7 @@ import {
   Link,
   HStack,
   Code,
+  useColorModeValue,
 } from '@chakra-ui/core';
 import { getLink } from '../../util';
 
@@ -28,6 +29,9 @@ const taquitoLink: JSX.Element = getLink('Taquito', 'https://tezostaquito.io/');
 const buttonRedditLink: JSX.Element = getLink('Reddit "The Button"', 'https://www.reddit.com/r/thebutton/');
 
 const HowTo: React.FC = () => {
+  const bg = useColorModeValue('gray.100', 'gray.100');
+  const color = useColorModeValue('black', 'gray.800');
+
   const elements = [
     {
       title: 'How does it work?',
@@ -111,7 +115,7 @@ const HowTo: React.FC = () => {
           </Container>
           <Text mt={8}>Using the CLI (more advanced users)</Text>
           <Container mt={4}>
-            <Code>
+            <Code color={color}>
               $ tezos-client remember contract tzbutton KT1L5XZbKeMXFDJuwr1zcFzkamTWf7kk6LRd
               <br />$ tezos-client transfer 0.2 from myalias to tzbutton
             </Code>
@@ -155,7 +159,7 @@ const HowTo: React.FC = () => {
     },
   ];
   return (
-    <Box bg="gray.100" py={16}>
+    <Box bg={bg} color={color} py={16}>
       {elements.map((el, index) => (
         <span key={index}>
           {index !== 0 ? <Divider my={16} /> : ''}
