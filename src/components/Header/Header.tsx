@@ -1,6 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Countdown from 'react-countdown';
-import { Square, Box, Divider, Text, Container, Button, Heading, useToast, Link } from '@chakra-ui/core';
+import {
+  VStack,
+  Spinner,
+  Square,
+  Box,
+  Divider,
+  Text,
+  Container,
+  Button,
+  Heading,
+  useToast,
+  Link,
+} from '@chakra-ui/core';
 import { getLink } from '../../util';
 import TzButton from '../TzButton/TzButton';
 
@@ -174,7 +186,12 @@ const Header: React.FC = () => {
       </Text>
     </>
   ) : (
-    <Box my={50}>Loading...</Box>
+    <Box my={48}>
+      <VStack spacing={4}>
+        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        <Text>Loading data from blockchain...</Text>
+      </VStack>
+    </Box>
   );
 
   return (
