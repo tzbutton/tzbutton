@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.f30f2fdb.chunk.css",
-    "main.js": "/static/js/main.91f373a5.chunk.js",
-    "main.js.map": "/static/js/main.91f373a5.chunk.js.map",
+    "main.js": "/static/js/main.1abbc287.chunk.js",
+    "main.js.map": "/static/js/main.1abbc287.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.797fecb0.js",
     "runtime-main.js.map": "/static/js/runtime-main.797fecb0.js.map",
-    "static/js/2.aff52d6a.chunk.js": "/static/js/2.aff52d6a.chunk.js",
-    "static/js/2.aff52d6a.chunk.js.map": "/static/js/2.aff52d6a.chunk.js.map",
+    "static/js/2.f7018a45.chunk.js": "/static/js/2.f7018a45.chunk.js",
+    "static/js/2.f7018a45.chunk.js.map": "/static/js/2.f7018a45.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.e294077603dfad5a17eed9196ef6a04b.js": "/precache-manifest.e294077603dfad5a17eed9196ef6a04b.js",
+    "precache-manifest.6903114cdffeaf8983639a11bb4d49f1.js": "/precache-manifest.6903114cdffeaf8983639a11bb4d49f1.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.f30f2fdb.chunk.css.map": "/static/css/main.f30f2fdb.chunk.css.map",
-    "static/js/2.aff52d6a.chunk.js.LICENSE.txt": "/static/js/2.aff52d6a.chunk.js.LICENSE.txt",
+    "static/js/2.f7018a45.chunk.js.LICENSE.txt": "/static/js/2.f7018a45.chunk.js.LICENSE.txt",
     "static/media/airgap-logo.svg": "/static/media/airgap-logo.38eff924.svg",
     "static/media/beacon-logo.svg": "/static/media/beacon-logo.944018ec.svg",
     "static/media/thanos-logo.svg": "/static/media/thanos-logo.b7b68acd.svg",
@@ -21,8 +21,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.797fecb0.js",
-    "static/js/2.aff52d6a.chunk.js",
+    "static/js/2.f7018a45.chunk.js",
     "static/css/main.f30f2fdb.chunk.css",
-    "static/js/main.91f373a5.chunk.js"
+    "static/js/main.1abbc287.chunk.js"
   ]
 }
