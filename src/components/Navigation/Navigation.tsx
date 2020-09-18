@@ -40,7 +40,7 @@ const Navigation: React.FC = () => {
               icon={<FaBell />}
             />
           </Link>
-          <Link href="https://github.com/AndreasGassmann/tztip.me" isExternal>
+          <Link href="https://github.com/tzbutton/tzbutton" isExternal>
             <IconButton
               size="md"
               fontSize="lg"
