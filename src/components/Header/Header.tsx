@@ -3,7 +3,7 @@ import Countdown from 'react-countdown';
 import {
   VStack,
   Spinner,
-  Square,
+  // Square,
   Box,
   Divider,
   Text,
@@ -14,20 +14,20 @@ import {
   Link,
 } from '@chakra-ui/core';
 import { getLink } from '../../util';
-import TzButton from '../TzButton/TzButton';
+// import TzButton from '../TzButton/TzButton';
 
 import {
   getPotAmount,
   checkRecentBlockForUpdates,
   readStateFromContract,
-  participate,
+  // participate,
   withdraw,
   openTezBlock,
   openBetterCallDev,
   getMyAddress,
   getTezBlockLinkForAddress,
 } from '../../services/beacon-service';
-import { getNextCountdown } from '../../services/countdown-service';
+// import { getNextCountdown } from '../../services/countdown-service';
 
 const WinnerAnnouncement = () => (
   <span>
@@ -138,13 +138,16 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-      <Square mt="6" onClick={participate}>
+      <Text fontSize="2xl" mt="6">
+        Stay tuned for the next round of TzButton!
+      </Text>
+      {/* <Square mt="6" onClick={participate}>
         <TzButton />
       </Square>
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown to
         <br /> <b>{getNextCountdown(state.countdownTime, state.potAmount)}</b>.
-      </Text>
+      </Text> */}
       <Divider my={16} />
       <Text fontSize="3xl">
         Pot Size <Text as={'b'}>{state.potAmount} XTZ</Text>
