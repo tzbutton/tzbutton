@@ -1,10 +1,10 @@
 import { BeaconWallet } from '@taquito/beacon-wallet';
-import { Tezos, OpKind } from '@taquito/taquito';
+import { TezosToolkit, OpKind } from '@taquito/taquito';
 import { BigNumber } from 'bignumber.js';
 
 import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT } from '../constants';
 
-Tezos.setProvider({ rpc: 'https://tezos-node.prod.gke.papers.tech/' });
+const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
 
 export interface ContractStorage {
   countdown_milliseconds: BigNumber;
