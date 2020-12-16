@@ -7,6 +7,7 @@ const hoursToMillis = (input: BigNumber) => {
 }
 
 const constant = hoursToMillis(new BigNumber(3))
+const START_VALUE = 100
 
 export const getCountdownForNextBalance = (input: string) => {
   return forHumans(
@@ -18,7 +19,10 @@ export const getCountdownForNextBalance = (input: string) => {
 }
 
 export const getCountdownDiffForNextBalance = (input: string): BigNumber => {
-  const balance = new BigNumber(input).times(10).plus(2)
+  const balance = new BigNumber(input)
+    .minus(START_VALUE) // We subtract 100 because that was the start value
+    .times(10)
+    .plus(2) // Because we want to get the next countdown value
 
   const countdownDiff = constant.plus(balance).dividedBy(balance)
 
