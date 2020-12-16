@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   OrderedList,
   ListItem,
@@ -13,34 +13,34 @@ import {
   HStack,
   Code,
   useColorModeValue,
-} from "@chakra-ui/core";
-import { getLink } from "../../util";
+} from '@chakra-ui/core'
+import { getLink } from '../../util'
 
-import { CONTRIBUTION_AMOUNT_STRING } from "../../constants";
+import { CONTRIBUTION_AMOUNT_STRING } from '../../constants'
 
-import Timeline from "../../timeline.png";
+import Timeline from '../../timeline.png'
 
-import AirGap from "../../logos/airgap-logo.svg";
-import Beacon from "../../logos/beacon-logo.svg";
-import Thanos from "../../logos/thanos-logo.svg";
+import AirGap from '../../logos/airgap-logo.svg'
+import Beacon from '../../logos/beacon-logo.svg'
+import Thanos from '../../logos/thanos-logo.svg'
 
 const beaconLink: JSX.Element = getLink(
-  "Beacon",
-  "https://www.walletbeacon.io/"
-);
-const taquitoLink: JSX.Element = getLink("Taquito", "https://tezostaquito.io/");
+  'Beacon',
+  'https://www.walletbeacon.io/'
+)
+const taquitoLink: JSX.Element = getLink('Taquito', 'https://tezostaquito.io/')
 const buttonRedditLink: JSX.Element = getLink(
   'Reddit "The Button"',
-  "https://www.reddit.com/r/thebutton/"
-);
+  'https://www.reddit.com/r/thebutton/'
+)
 
 const HowTo: React.FC = () => {
-  const bg = useColorModeValue("gray.100", "gray.100");
-  const color = useColorModeValue("black", "gray.800");
+  const bg = useColorModeValue('gray.100', 'gray.100')
+  const color = useColorModeValue('black', 'gray.800')
 
   const elements = [
     {
-      title: "How does it work?",
+      title: 'How does it work?',
       description: (
         <>
           The TZButton experiment is controlled by a smart contract deployed on
@@ -68,7 +68,7 @@ const HowTo: React.FC = () => {
           <Image src={Timeline} width="100%"></Image>
           <OrderedList>
             <ListItem>
-              Alice presses the button, <b>{CONTRIBUTION_AMOUNT_STRING()}</b>{" "}
+              Alice presses the button, <b>{CONTRIBUTION_AMOUNT_STRING()}</b>{' '}
               are now on the smart contract, the countdown is reset and the
               total time is reduced by <b>1 hour and 30 minutes</b>, which means
               it's now counting down from <b>22 hours and 30 minutes</b>.
@@ -82,7 +82,7 @@ const HowTo: React.FC = () => {
             </ListItem>
             <ListItem>
               Many people participate, the balance of the smart contract
-              increases and the time each countdown lasts decreases,{" "}
+              increases and the time each countdown lasts decreases,{' '}
               <b>but the countdown never hits 0</b>. Each transaction adds
               another <b>{CONTRIBUTION_AMOUNT_STRING()}</b>, the balance grows
               to <b>{CONTRIBUTION_AMOUNT_STRING(12099)}</b> and the countdown
@@ -90,7 +90,7 @@ const HowTo: React.FC = () => {
             </ListItem>
             <ListItem>
               <b>5 hours and 32 minutes</b> before the countdown expires,
-              Charlie presses the button,{" "}
+              Charlie presses the button,{' '}
               <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b> are now on the smart
               contract, the countdown is reset and the total time is reduced by
               only <b>around half a second</b>, which means it's still counting
@@ -103,7 +103,7 @@ const HowTo: React.FC = () => {
               means <b>Charlie is the winner</b>.
             </ListItem>
             <ListItem>
-              Charlie can now withdraw{" "}
+              Charlie can now withdraw{' '}
               <b>{CONTRIBUTION_AMOUNT_STRING(12100)}</b>, because he was the
               leader when the countdown expired.
             </ListItem>
@@ -112,7 +112,7 @@ const HowTo: React.FC = () => {
       ),
     },
     {
-      title: "How to participate",
+      title: 'How to participate',
       description: (
         <>
           Download a beacon compatible wallet and click the button.
@@ -144,7 +144,7 @@ const HowTo: React.FC = () => {
       ),
     },
     {
-      title: "Why TzButton?",
+      title: 'Why TzButton?',
       description: (
         <>
           The experiment was inspired by “the Button” (an experiment conducted
@@ -183,12 +183,12 @@ const HowTo: React.FC = () => {
         </>
       ),
     },
-  ];
+  ]
   return (
     <Box bg={bg} color={color} py={16}>
       {elements.map((el, index) => (
         <span key={index}>
-          {index !== 0 ? <Divider my={16} /> : ""}
+          {index !== 0 ? <Divider my={16} /> : ''}
           <Container>
             <Heading mb={4}>{el.title}</Heading>
             {el.description}
@@ -196,7 +196,7 @@ const HowTo: React.FC = () => {
         </span>
       ))}
     </Box>
-  );
-};
+  )
+}
 
-export default HowTo;
+export default HowTo

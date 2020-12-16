@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Box,
   Link,
@@ -7,14 +7,14 @@ import {
   HStack,
   useColorMode,
   useColorModeValue,
-} from "@chakra-ui/core";
+} from '@chakra-ui/core'
 
-import { FaGithub, FaMoon, FaSun, FaBell } from "react-icons/fa";
+import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa'
 
 const Navigation: React.FC = () => {
-  const { toggleColorMode: toggleMode } = useColorMode();
-  const text = useColorModeValue("dark", "light");
-  const SwitchIcon = useColorModeValue(FaMoon, FaSun);
+  const { toggleColorMode: toggleMode } = useColorMode()
+  const text = useColorModeValue('dark', 'light')
+  const SwitchIcon = useColorModeValue(FaMoon, FaSun)
 
   return (
     <Flex
@@ -62,7 +62,7 @@ const Navigation: React.FC = () => {
         </HStack>
       </Flex>
     </Flex>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation

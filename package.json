@@ -31,7 +31,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "actions:deploy": "gh-pages -d build -u \"github-actions-bot <support+actions@github.com>\""
+    "actions:deploy": "gh-pages -d build -u \"github-actions-bot <support+actions@github.com>\"",
+    "prettier": "prettier --write 'src/**/*' 'docs/**/*.md'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,5 +51,9 @@
   },
   "devDependencies": {
     "prettier": "^2.2.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }

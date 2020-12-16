@@ -1,31 +1,39 @@
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from 'bignumber.js'
 
 const hoursToMillis = (input: BigNumber) => {
-  const hourInMinutes = input.times(60);
-  const hourInSeconds = hourInMinutes.times(60);
-  return hourInSeconds.times(1000);
-};
+  const hourInMinutes = input.times(60)
+  const hourInSeconds = hourInMinutes.times(60)
+  return hourInSeconds.times(1000)
+}
 
-const constant = hoursToMillis(new BigNumber(3));
+const constant = hoursToMillis(new BigNumber(3))
 
 export const getCountdownForNextBalance = (input: string) => {
-  return forHumans(getCountdownDiffForNextBalance(input).dividedBy(1000).integerValue().toNumber());
-};
+  return forHumans(
+    getCountdownDiffForNextBalance(input)
+      .dividedBy(1000)
+      .integerValue()
+      .toNumber()
+  )
+}
 
 export const getCountdownDiffForNextBalance = (input: string): BigNumber => {
-  const balance = new BigNumber(input).times(10).plus(2);
+  const balance = new BigNumber(input).times(10).plus(2)
 
-  const countdownDiff = constant.plus(balance).dividedBy(balance);
+  const countdownDiff = constant.plus(balance).dividedBy(balance)
 
-  return countdownDiff;
-};
+  return countdownDiff
+}
 
-export const getNextCountdown = (currentCountdown: number, potAmount: string) => {
-  const currentCountdownBn = new BigNumber(currentCountdown * 1000);
-  const countdownDiff = getCountdownDiffForNextBalance(potAmount);
-  const countdown = currentCountdownBn.minus(countdownDiff);
-  return forHumans(countdown.dividedBy(1000).integerValue().toNumber());
-};
+export const getNextCountdown = (
+  currentCountdown: number,
+  potAmount: string
+) => {
+  const currentCountdownBn = new BigNumber(currentCountdown * 1000)
+  const countdownDiff = getCountdownDiffForNextBalance(potAmount)
+  const countdown = currentCountdownBn.minus(countdownDiff)
+  return forHumans(countdown.dividedBy(1000).integerValue().toNumber())
+}
 
 /**
  * https://stackoverflow.com/a/34270811
@@ -42,13 +50,18 @@ const forHumans = (seconds: number) => {
     [Math.floor(((seconds % 31536000) % 86400) / 3600), 'hours'],
     [Math.floor((((seconds % 31536000) % 86400) % 3600) / 60), 'minutes'],
     [(((seconds % 31536000) % 86400) % 3600) % 60, 'seconds'],
-  ];
-  var returntext = '';
+  ]
+  var returntext = ''
 
   for (var i = 0, max = levels.length; i < max; i++) {
-    if (levels[i][0] === 0) continue;
+    if (levels[i][0] === 0) continue
     returntext +=
-      ' ' + levels[i][0] + ' ' + (levels[i][0] === 1 ? levels[i][1].substr(0, levels[i][1].length - 1) : levels[i][1]);
+      ' ' +
+      levels[i][0] +
+      ' ' +
+      (levels[i][0] === 1
+        ? levels[i][1].substr(0, levels[i][1].length - 1)
+        : levels[i][1])
   }
-  return returntext.trim();
-};
+  return returntext.trim()
+}

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Countdown from 'react-countdown';
+import React, { useState, useEffect, useRef } from 'react'
+import Countdown from 'react-countdown'
 import {
   VStack,
   Spinner,
-  // Square,
+  Square,
   Box,
   Divider,
   Text,
@@ -12,22 +12,22 @@ import {
   Heading,
   useToast,
   Link,
-} from '@chakra-ui/core';
-import { getLink } from '../../util';
-// import TzButton from '../TzButton/TzButton';
+} from '@chakra-ui/core'
+import { getLink } from '../../util'
+import TzButton from '../TzButton/TzButton'
 
 import {
   getPotAmount,
   checkRecentBlockForUpdates,
   readStateFromContract,
-  // participate,
+  participate,
   withdraw,
   openTezBlock,
   openBetterCallDev,
   getMyAddress,
   getTezBlockLinkForAddress,
-} from '../../services/beacon-service';
-// import { getNextCountdown } from '../../services/countdown-service';
+} from '../../services/beacon-service'
+import { getNextCountdown } from '../../services/countdown-service'
 
 const WinnerAnnouncement = () => (
   <span>
@@ -37,25 +37,28 @@ const WinnerAnnouncement = () => (
       Withdraw
     </Button>
   </span>
-);
+)
 
 interface AppState {
-  loaded: boolean;
-  potAmount: string;
-  leader: string;
-  leaderStartTime: Date | undefined;
-  leaderEndTime: Date | undefined;
-  countdownTime: number;
-  myAddress: string;
+  loaded: boolean
+  potAmount: string
+  leader: string
+  leaderStartTime: Date | undefined
+  leaderEndTime: Date | undefined
+  countdownTime: number
+  myAddress: string
 }
 
-const refreshContractState = async (setState: React.Dispatch<React.SetStateAction<AppState>>, toast?: any) => {
-  console.log('refreshing');
-  const contractState = await readStateFromContract();
-  const myAddress = await getMyAddress();
-  const startDate = new Date(contractState.leadership_start_timestamp);
-  const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber();
-  const endDate = new Date(startDate.getTime() + secondsToWin * 1000);
+const refreshContractState = async (
+  setState: React.Dispatch<React.SetStateAction<AppState>>,
+  toast?: any
+) => {
+  console.log('refreshing')
+  const contractState = await readStateFromContract()
+  const myAddress = await getMyAddress()
+  const startDate = new Date(contractState.leadership_start_timestamp)
+  const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber()
+  const endDate = new Date(startDate.getTime() + secondsToWin * 1000)
   const newState = {
     loaded: true,
     potAmount: await getPotAmount(),
@@ -64,25 +67,28 @@ const refreshContractState = async (setState: React.Dispatch<React.SetStateActio
     leaderEndTime: endDate,
     countdownTime: secondsToWin,
     myAddress,
-  };
-  initialResolve = Promise.resolve(newState);
-  setState(newState);
+  }
+  initialResolve = Promise.resolve(newState)
+  setState(newState)
   if (toast) {
     toast({
       position: 'top',
       title: 'New leader',
-      description: 'Someone just became the new leader and the countdown was reset.',
+      description:
+        'Someone just became the new leader and the countdown was reset.',
       status: 'success',
       duration: 6000,
       isClosable: true,
-    });
+    })
   }
-};
+}
 
 // TODO: Get rid of this
-let initialResolve = new Promise((resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
-  refreshContractState(resolve);
-});
+let initialResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
+    refreshContractState(resolve)
+  }
+)
 
 // TODO: Move this into component?
 const globalState = {
@@ -93,33 +99,36 @@ const globalState = {
   leaderEndTime: undefined,
   myAddress: '',
   countdownTime: 0,
-};
+}
 
 const Header: React.FC = () => {
-  const toast = useToast();
-  const [state, setState] = useState<AppState>(globalState);
+  const toast = useToast()
+  const [state, setState] = useState<AppState>(globalState)
 
-  const intervalRef = useRef<undefined | NodeJS.Timeout>();
+  const intervalRef = useRef<undefined | NodeJS.Timeout>()
 
   useEffect(() => {
-    console.log('setting up interval');
+    console.log('setting up interval')
 
-    initialResolve.then(setState);
+    initialResolve.then(setState)
     intervalRef.current = setInterval(async () => {
-      const hasUpdates = await checkRecentBlockForUpdates();
+      const hasUpdates = await checkRecentBlockForUpdates()
       if (hasUpdates) {
-        refreshContractState(setState, toast);
+        refreshContractState(setState, toast)
       }
-    }, 10 * 1000);
+    }, 10 * 1000)
     return () => {
-      console.log('removing interval');
+      console.log('removing interval')
       if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+        clearInterval(intervalRef.current)
       }
-    };
-  }, [toast]);
+    }
+  }, [toast])
 
-  const leaderLink = getLink(state.leader, getTezBlockLinkForAddress(state.leader));
+  const leaderLink = getLink(
+    state.leader,
+    getTezBlockLinkForAddress(state.leader)
+  )
 
   const content = state.loaded ? (
     <>
@@ -131,23 +140,25 @@ const Header: React.FC = () => {
       </Text>
       <Text fontSize="6xl">
         {!!state.leaderEndTime ? (
-          <Countdown date={state.leaderEndTime} daysInHours={true} zeroPadTime={2}>
+          <Countdown
+            date={state.leaderEndTime}
+            daysInHours={true}
+            zeroPadTime={2}
+          >
             <WinnerAnnouncement />
           </Countdown>
         ) : (
           'Loading...'
         )}
       </Text>
-      <Text fontSize="2xl" mt="6">
-        Stay tuned for the next round of TzButton!
-      </Text>
-      {/* <Square mt="6" onClick={participate}>
+      <Square mt="6" onClick={participate}>
         <TzButton />
       </Square>
       <Text mt="6">
-        Click the button to become the <b>new leader</b> and reset the countdown to
+        Click the button to become the <b>new leader</b> and reset the countdown
+        to
         <br /> <b>{getNextCountdown(state.countdownTime, state.potAmount)}</b>.
-      </Text> */}
+      </Text>
       <Divider my={16} />
       <Text fontSize="3xl">
         Pot Size <Text as={'b'}>{state.potAmount} XTZ</Text>
@@ -171,7 +182,13 @@ const Header: React.FC = () => {
         </Text>
       )}
       <Container>
-        <Button mr={2} mt={8} onClick={openTezBlock} colorScheme="blue" size="sm">
+        <Button
+          mr={2}
+          mt={8}
+          onClick={openTezBlock}
+          colorScheme="blue"
+          size="sm"
+        >
           History
         </Button>
         <Button mt={8} onClick={openBetterCallDev} colorScheme="blue" size="sm">
@@ -179,11 +196,14 @@ const Header: React.FC = () => {
         </Button>
       </Container>
       <Text opacity={0.7} mt="10">
-        Disclaimer: This is an experiment with an unaudited smart contract, consider the funds you send to the contract
-        as lost.
+        Disclaimer: This is an experiment with an unaudited smart contract,
+        consider the funds you send to the contract as lost.
       </Text>
       <Text opacity={0.7} mt="10">
-        <Link href="https://github.com/tzbutton/tzbutton-contract/issues/1" isExternal>
+        <Link
+          href="https://github.com/tzbutton/tzbutton-contract/issues/1"
+          isExternal
+        >
           Conclusion of Round 1
         </Link>
       </Text>
@@ -191,11 +211,17 @@ const Header: React.FC = () => {
   ) : (
     <Box my={48}>
       <VStack spacing={4}>
-        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
         <Text>Loading data from blockchain...</Text>
       </VStack>
     </Box>
-  );
+  )
 
   return (
     <Box mb={20}>
@@ -207,7 +233,7 @@ const Header: React.FC = () => {
         </Container>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

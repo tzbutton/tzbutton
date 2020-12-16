@@ -1,7 +1,7 @@
-@import url("https://rsms.me/inter/inter.css");
+@import url('https://rsms.me/inter/inter.css');
 @supports (font-variation-settings: normal) {
   html {
-    font-family: "Inter var", sans-serif;
+    font-family: 'Inter var', sans-serif;
     background: #fff;
   }
 }
@@ -15,13 +15,13 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Inter var", sans-serif;
+  font-family: 'Inter var', sans-serif;
   margin-bottom: 0;
 }
 
 p,
 a {
-  font-family: "Inter var", sans-serif;
+  font-family: 'Inter var', sans-serif;
 }
 .chakra-container {
   max-width: 90ch !important;

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg';
-import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg';
+import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg'
+import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg'
 
 const TzButton: React.FC = () => {
-  const [isPressed, setIsPressed] = useState(false);
+  const [isPressed, setIsPressed] = useState(false)
 
   return (
     <img
@@ -16,7 +16,7 @@ const TzButton: React.FC = () => {
       height="200px"
       alt="TzButton - click to participate"
     />
-  );
-};
+  )
+}
 
-export default TzButton;
+export default TzButton

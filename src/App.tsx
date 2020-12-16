@@ -1,14 +1,14 @@
-import React from 'react';
-import './App.css';
-import theme from '@chakra-ui/theme';
+import React from 'react'
+import './App.css'
+import theme from '@chakra-ui/theme'
 
-import Navigation from './components/Navigation/Navigation';
-import Header from './components/Header/Header';
-import HowTo from './components/HowTo/HowTo';
-import Faq from './components/Faq/Faq';
-import Footer from './components/Footer/Footer';
+import Navigation from './components/Navigation/Navigation'
+import Header from './components/Header/Header'
+import HowTo from './components/HowTo/HowTo'
+import Faq from './components/Faq/Faq'
+import Footer from './components/Footer/Footer'
 
-import { Stack, ChakraProvider, CSSReset } from '@chakra-ui/core';
+import { Stack, ChakraProvider, CSSReset } from '@chakra-ui/core'
 
 // Use at the root of your app
 class App extends React.Component<{}> {
@@ -24,8 +24,8 @@ class App extends React.Component<{}> {
         </Stack>
         <Footer />
       </ChakraProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App
