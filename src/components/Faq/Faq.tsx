@@ -111,7 +111,7 @@ const FAQs = [
       <>
         Probably not.
         <br />
-        Don't participate if you cannot afford to lose the 0.2 XTZ you are
+        Don't participate if you cannot afford to lose the 0.2 tez you are
         sending to the contract.
       </>
     ),

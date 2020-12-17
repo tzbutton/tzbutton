@@ -160,7 +160,7 @@ const Header: React.FC = () => {
       </Text>
       <Divider my={16} />
       <Text fontSize="3xl">
-        Pot Size <Text as={'b'}>{state.potAmount} XTZ</Text>
+        Pot Size <Text as={'b'}>{state.potAmount} tez</Text>
       </Text>
       {state.leader === state.myAddress ? (
         <>
