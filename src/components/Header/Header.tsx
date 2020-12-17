@@ -199,14 +199,6 @@ const Header: React.FC = () => {
         Disclaimer: This is an experiment with an unaudited smart contract,
         consider the funds you send to the contract as lost.
       </Text>
-      <Text opacity={0.7} mt="10">
-        <Link
-          href="https://github.com/tzbutton/tzbutton-contract/issues/1"
-          isExternal
-        >
-          Conclusion of Round 1
-        </Link>
-      </Text>
     </>
   ) : (
     <Box my={48}>

@@ -102,7 +102,7 @@ const FAQs = [
     description: catImage,
   },
   {
-    title: `Can I pay more or less than ${CONTRIBUTION_AMOUNT_STRING()}?`,
+    title: `Can I transfer more or less than ${CONTRIBUTION_AMOUNT_STRING()}?`,
     description: `No, the contract will not allow you to pay more or less than ${CONTRIBUTION_AMOUNT_STRING()}.`,
   },
   {
