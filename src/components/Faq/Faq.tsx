@@ -83,7 +83,7 @@ const FAQs = [
   },
   {
     title: `How can I participate in the experiment?`,
-    description: `In case you already have a beacon compatible wallet, you just have to press the button. In case you don't have a beacon compatible wallet yet, here are some guide how to set up one: coming soon`,
+    description: `In case you already have a beacon compatible wallet, you just have to press the button. In case you don't have a beacon compatible wallet yet, go and setup one.`,
   },
   {
     title: `How can I withdraw the balance?`,
@@ -102,11 +102,7 @@ const FAQs = [
     description: catImage,
   },
   {
-    title: `Can I pay more than ${CONTRIBUTION_AMOUNT_STRING()}?`,
-    description: `No, the contract will not allow you to pay more or less than ${CONTRIBUTION_AMOUNT_STRING()}.`,
-  },
-  {
-    title: `Can I pay less than ${CONTRIBUTION_AMOUNT_STRING()}?`,
+    title: `Can I transfer more or less than ${CONTRIBUTION_AMOUNT_STRING()}?`,
     description: `No, the contract will not allow you to pay more or less than ${CONTRIBUTION_AMOUNT_STRING()}.`,
   },
   {
