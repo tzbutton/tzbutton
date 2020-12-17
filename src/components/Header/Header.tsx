@@ -196,7 +196,11 @@ const Header: React.FC = () => {
         </Button>
       </Container>
       <Text mt="10">
-        Round 1 🏆 &nbsp;
+        Round 1 &nbsp;
+        <span role="img" aria-label="Winner">
+          🏆{' '}
+        </span>{' '}
+        &nbsp;
         <Link
           href="https://tezblock.io/account/tz1LHjwnT3et96QZyjfUEZWuGE2kqn4N6qEP"
           isExternal
