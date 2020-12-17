@@ -8,6 +8,7 @@ import {
   Divider,
   Text,
   Container,
+  Link,
   Button,
   Heading,
   useToast,
@@ -194,6 +195,15 @@ const Header: React.FC = () => {
           Contract
         </Button>
       </Container>
+      <Text mt="10">
+        Round 1 🏆 &nbsp;
+        <Link
+          href="https://tezblock.io/account/tz1LHjwnT3et96QZyjfUEZWuGE2kqn4N6qEP"
+          isExternal
+        >
+          tz1LHjwnT3et96QZyjfUEZWuGE2kqn4N6qEP • 25.20 tez
+        </Link>{' '}
+      </Text>
       <Text opacity={0.7} mt="10">
         Disclaimer: This is an experiment with an unaudited smart contract,
         consider the funds you send to the contract as lost.
