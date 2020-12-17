@@ -23,6 +23,7 @@ import Timeline from '../../timeline.png'
 import AirGap from '../../logos/airgap-logo.svg'
 import Beacon from '../../logos/beacon-logo.svg'
 import Thanos from '../../logos/thanos-logo.svg'
+import Kukai from '../../logos/kukai-logo.svg'
 
 const beaconLink: JSX.Element = getLink(
   'Beacon',
@@ -43,7 +44,7 @@ const HowTo: React.FC = () => {
       title: 'How does it work?',
       description: (
         <>
-          The TZButton experiment is controlled by a smart contract deployed on
+          The TzButton experiment is controlled by a smart contract deployed on
           the Tezos blockchain. Whenever anyone presses the button three things
           will happen:
           <Container mt="3">
@@ -115,7 +116,7 @@ const HowTo: React.FC = () => {
       title: 'How to participate',
       description: (
         <>
-          Download a beacon compatible wallet and click the button.
+          Use a Beacon-compatible wallet and click the button.
           <Container mt="8">
             <HStack spacing="24px">
               <Link href="https://airgap.it/" isExternal>
@@ -129,6 +130,9 @@ const HowTo: React.FC = () => {
               </Link>
               <Link href="https://thanoswallet.com/" isExternal>
                 <Image src={Thanos} width="150px"></Image>
+              </Link>
+              <Link href="https://wallet.kukai.app/" isExternal>
+                <Image src={Kukai} width="100px"></Image>
               </Link>
             </HStack>
           </Container>
