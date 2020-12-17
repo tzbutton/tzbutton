@@ -11,7 +11,6 @@ import {
   Button,
   Heading,
   useToast,
-  Link,
 } from '@chakra-ui/core'
 import { getLink } from '../../util'
 import TzButton from '../TzButton/TzButton'
