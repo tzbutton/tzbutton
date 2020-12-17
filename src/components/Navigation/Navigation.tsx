@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/core'
 
 import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa'
+import { TZBUTTON_CONTRACT } from '../../constants'
 
 const Navigation: React.FC = () => {
   const { toggleColorMode: toggleMode } = useColorMode()
@@ -28,7 +29,7 @@ const Navigation: React.FC = () => {
       <Flex align="center" color="gray.400">
         <HStack spacing="2">
           <Link
-            href="https://t.me/TezosNotifierBot?start=tzbutton_KT1QrxrDkQNYGVwAbWbb7g4T4PHBCV3L4xSM_TzButton"
+            href={`https://t.me/TezosNotifierBot?start=tzbutton_${TZBUTTON_CONTRACT}_TzButton`}
             isExternal
           >
             <IconButton

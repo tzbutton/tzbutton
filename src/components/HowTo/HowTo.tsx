@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/core'
 import { getLink } from '../../util'
 
-import { CONTRIBUTION_AMOUNT_STRING } from '../../constants'
+import { CONTRIBUTION_AMOUNT_STRING, TZBUTTON_CONTRACT } from '../../constants'
 
 import Timeline from '../../timeline.png'
 
@@ -136,7 +136,7 @@ const HowTo: React.FC = () => {
           <Container mt={4}>
             <Code color={color}>
               $ tezos-client remember contract tzbutton
-              KT1QrxrDkQNYGVwAbWbb7g4T4PHBCV3L4xSM
+              {TZBUTTON_CONTRACT}
               <br />$ tezos-client transfer 0.2 from myalias to tzbutton
             </Code>
           </Container>

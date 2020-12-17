@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 
-export const TZBUTTON_CONTRACT: string = 'KT1QrxrDkQNYGVwAbWbb7g4T4PHBCV3L4xSM'
+export const TZBUTTON_CONTRACT: string = 'KT1H28iie4mW9LmmJeYLjH6zkC8wwSmfHf5P'
 export const TZBUTTON_AMOUNT_MUTEZ: string = '200000'
 
 export const XTZ_STRING = 'XTZ'
