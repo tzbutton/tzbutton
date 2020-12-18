@@ -32,7 +32,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "actions:deploy": "gh-pages -d build -u \"github-actions-bot <support+actions@github.com>\"",
-    "prettier": "prettier --write 'src/**/*' 'docs/**/*.md'"
+    "prettier": "prettier --write 'src/**/*' 'public/**/*' 'README.md'"
   },
   "eslintConfig": {
     "extends": "react-app"
