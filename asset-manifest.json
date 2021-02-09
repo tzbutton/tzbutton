@@ -1,29 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.81459fde.chunk.css",
-    "main.js": "/static/js/main.5dc42060.chunk.js",
-    "main.js.map": "/static/js/main.5dc42060.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.797fecb0.js",
-    "runtime-main.js.map": "/static/js/runtime-main.797fecb0.js.map",
-    "static/js/2.b517613d.chunk.js": "/static/js/2.b517613d.chunk.js",
-    "static/js/2.b517613d.chunk.js.map": "/static/js/2.b517613d.chunk.js.map",
+    "main.css": "/static/css/main.b7af2322.chunk.css",
+    "main.js": "/static/js/main.16371488.chunk.js",
+    "main.js.map": "/static/js/main.16371488.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e1f31f5e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e1f31f5e.js.map",
+    "static/js/2.eb6a317a.chunk.js": "/static/js/2.eb6a317a.chunk.js",
+    "static/js/2.eb6a317a.chunk.js.map": "/static/js/2.eb6a317a.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.6cb0c6f4dfd70fe96a86f3468f6aa127.js": "/precache-manifest.6cb0c6f4dfd70fe96a86f3468f6aa127.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.81459fde.chunk.css.map": "/static/css/main.81459fde.chunk.css.map",
-    "static/js/2.b517613d.chunk.js.LICENSE.txt": "/static/js/2.b517613d.chunk.js.LICENSE.txt",
-    "static/media/airgap-logo.svg": "/static/media/airgap-logo.38eff924.svg",
-    "static/media/beacon-logo.svg": "/static/media/beacon-logo.944018ec.svg",
-    "static/media/kukai-logo.svg": "/static/media/kukai-logo.2b38eb40.svg",
-    "static/media/thanos-logo.svg": "/static/media/thanos-logo.b7b68acd.svg",
-    "static/media/timeline.png": "/static/media/timeline.1485c219.png",
-    "static/media/tzbutton-logo-pressed.svg": "/static/media/tzbutton-logo-pressed.83915e22.svg",
-    "static/media/tzbutton-logo-unpressed.svg": "/static/media/tzbutton-logo-unpressed.45024e1f.svg"
+    "static/css/main.b7af2322.chunk.css.map": "/static/css/main.b7af2322.chunk.css.map",
+    "static/js/2.eb6a317a.chunk.js.LICENSE.txt": "/static/js/2.eb6a317a.chunk.js.LICENSE.txt",
+    "static/media/airgap-logo.7bc5d0c0.svg": "/static/media/airgap-logo.7bc5d0c0.svg",
+    "static/media/beacon-logo.3b27d329.svg": "/static/media/beacon-logo.3b27d329.svg",
+    "static/media/kukai-logo.b7384935.svg": "/static/media/kukai-logo.b7384935.svg",
+    "static/media/thanos-logo.aa19b619.svg": "/static/media/thanos-logo.aa19b619.svg",
+    "static/media/timeline.f8d97de2.png": "/static/media/timeline.f8d97de2.png",
+    "static/media/tzbutton-logo-pressed.9d4026b0.svg": "/static/media/tzbutton-logo-pressed.9d4026b0.svg",
+    "static/media/tzbutton-logo-unpressed.e3808c2a.svg": "/static/media/tzbutton-logo-unpressed.e3808c2a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.797fecb0.js",
-    "static/js/2.b517613d.chunk.js",
-    "static/css/main.81459fde.chunk.css",
-    "static/js/main.5dc42060.chunk.js"
+    "static/js/runtime-main.e1f31f5e.js",
+    "static/js/2.eb6a317a.chunk.js",
+    "static/css/main.b7af2322.chunk.css",
+    "static/js/main.16371488.chunk.js"
   ]
 }
