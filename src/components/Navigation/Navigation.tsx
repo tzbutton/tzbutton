@@ -11,11 +11,17 @@ import {
 
 import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa'
 import { TZBUTTON_CONTRACT } from '../../constants'
+import { setBeaconColorMode } from '../../services/beacon-service'
 
 const Navigation: React.FC = () => {
   const { toggleColorMode: toggleMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+
+  const toggle = () => {
+    toggleMode()
+    setBeaconColorMode(text)
+  }
 
   return (
     <Flex
@@ -57,7 +63,7 @@ const Navigation: React.FC = () => {
             aria-label={`Switch to ${text} mode`}
             variant="ghost"
             color="current"
-            onClick={toggleMode}
+            onClick={toggle}
             icon={<SwitchIcon />}
           />
         </HStack>

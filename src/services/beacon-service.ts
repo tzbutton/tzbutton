@@ -14,7 +14,7 @@ export interface ContractStorage {
 
 let globalWallet: BeaconWallet | undefined
 
-const connectToBeacon = async () => {
+const getBeaconInstance = async () => {
   if (!globalWallet) {
     // Create a new BeaconWallet instance. The options will be passed to the DAppClient constructor.
     const wallet = new BeaconWallet({ name: 'TzButton' })
@@ -24,16 +24,23 @@ const connectToBeacon = async () => {
     globalWallet = wallet
   }
 
+  return globalWallet
+}
 
-  if (await globalWallet.client.getActiveAccount()) {
+const connectToBeacon = async () => {
+  console.log('CONNECTING TO BEACON')
+  const wallet = await getBeaconInstance()
+
+
+  if (await wallet.client.getActiveAccount()) {
     // Check if we already have an account connected, so we can skip requestPermissions.
-    return globalWallet
+    return wallet
   }
 
   // Send permission request to the connected wallet. This will either be the browser extension, or a wallet over the P2P network.
-  await globalWallet.requestPermissions()
+  await wallet.requestPermissions()
 
-  return globalWallet
+  return wallet
 }
 
 export const participate = async (): Promise<void> => {
@@ -116,9 +123,20 @@ export const getPotAmount = async () => {
 }
 
 export const getMyAddress = async () => {
-  const wallet = new BeaconWallet({ name: 'TzButton' })
+  const wallet = await getBeaconInstance()
 
   const activeAccount = await wallet.client.getActiveAccount()
 
   return activeAccount?.address ?? ''
 }
+
+export const setBeaconColorMode = async (colorMode: 'dark' | 'light') => {
+  const wallet = await getBeaconInstance()
+  if (wallet) {
+    await wallet.client.setColorMode(colorMode as any)
+  }
+}
+
+// TODO: How do you do this without hacks?
+const colorMode = localStorage.getItem('chakra-ui-color-mode')
+setBeaconColorMode(colorMode as any || 'light')
