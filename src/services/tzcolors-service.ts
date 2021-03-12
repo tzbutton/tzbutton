@@ -1,5 +1,5 @@
 import { OpKind, TezosToolkit } from '@taquito/taquito'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosError } from 'axios'
 import BigNumber from 'bignumber.js'
 
 import colorsJSON from '../colors.json'
