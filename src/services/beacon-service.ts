@@ -2,7 +2,8 @@ import { BeaconWallet } from '@taquito/beacon-wallet'
 import { TezosToolkit, OpKind } from '@taquito/taquito'
 import { BigNumber } from 'bignumber.js'
 
-import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_CONTRACT } from '../constants'
+import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_COLOR_CONTRACT, TZBUTTON_CONTRACT } from '../constants'
+import { getColors } from './tzcolors-service'
 
 const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
 
@@ -10,6 +11,12 @@ export interface ContractStorage {
   countdown_milliseconds: BigNumber
   leader: string
   leadership_start_timestamp: number
+}
+
+export interface ColorContractStorage {
+  highest_bidder: string
+  state: BigNumber
+  token_id: BigNumber
 }
 
 let globalWallet: BeaconWallet | undefined
@@ -53,6 +60,17 @@ export const participate = async (): Promise<void> => {
         amount: TZBUTTON_AMOUNT_MUTEZ,
         destination: TZBUTTON_CONTRACT,
       },
+      {
+        kind: 'transaction' as any,
+        amount: '0',
+        destination: 'KT1RPW5kTX6WFxg8JK34rGEU24gqEEudyfvz',
+        parameters: {
+          entrypoint: 'set_color',
+          value: {
+            int: "925"
+          }
+        }
+      },
     ],
   })
 }
@@ -77,6 +95,14 @@ export const readStateFromContract = async (): Promise<ContractStorage> => {
   const contract = await Tezos.contract.at(TZBUTTON_CONTRACT)
 
   const contractStorage: ContractStorage = await contract.storage()
+
+  return contractStorage
+}
+
+export const readColorStateFromContract = async (): Promise<ColorContractStorage> => {
+  const contract = await Tezos.contract.at(TZBUTTON_COLOR_CONTRACT)
+
+  const contractStorage: ColorContractStorage = await contract.storage()
 
   return contractStorage
 }
@@ -126,6 +152,10 @@ export const getMyAddress = async () => {
   const wallet = await getBeaconInstance()
 
   const activeAccount = await wallet.client.getActiveAccount()
+
+  if (activeAccount) {
+    getColors(activeAccount.address)
+  }
 
   return activeAccount?.address ?? ''
 }

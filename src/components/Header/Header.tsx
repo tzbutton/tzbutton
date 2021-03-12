@@ -20,6 +20,7 @@ import {
   getPotAmount,
   checkRecentBlockForUpdates,
   readStateFromContract,
+  readColorStateFromContract,
   participate,
   withdraw,
   openTezBlock,
@@ -28,6 +29,9 @@ import {
   getTezBlockLinkForAddress,
 } from '../../services/beacon-service'
 import { getNextCountdown } from '../../services/countdown-service'
+
+import colors from '../../colors.json'
+import { Colors, getColors } from '../../services/tzcolors-service'
 
 const WinnerAnnouncement = () => (
   <span>
@@ -47,6 +51,8 @@ interface AppState {
   leaderEndTime: Date | undefined
   countdownTime: number
   myAddress: string
+  color: string | undefined
+  availableColors: Colors[]
 }
 
 const refreshContractState = async (
@@ -55,7 +61,15 @@ const refreshContractState = async (
 ) => {
   console.log('refreshing')
   const contractState = await readStateFromContract()
+  const colorState = await readColorStateFromContract()
+  console.log('colorState', colorState)
+  console.log('ACTIVE COLOR', colorState.token_id.toFixed())
+  const color =
+    colors.find((c) => c.token_id === colorState.token_id.toNumber())?.symbol ??
+    ''
   const myAddress = await getMyAddress()
+  const availableColors = await getColors(myAddress)
+  console.log('AVAILBLE COLORS', availableColors)
   const startDate = new Date(contractState.leadership_start_timestamp)
   const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber()
   const endDate = new Date(startDate.getTime() + secondsToWin * 1000)
@@ -67,6 +81,8 @@ const refreshContractState = async (
     leaderEndTime: endDate,
     countdownTime: secondsToWin,
     myAddress,
+    color,
+    availableColors,
   }
   initialResolve = Promise.resolve(newState)
   setState(newState)
@@ -99,6 +115,8 @@ const globalState = {
   leaderEndTime: undefined,
   myAddress: '',
   countdownTime: 0,
+  color: '',
+  availableColors: [],
 }
 
 const Header: React.FC = () => {
@@ -132,6 +150,31 @@ const Header: React.FC = () => {
 
   const content = state.loaded ? (
     <>
+      {state.availableColors.map((c) => (
+        <div
+          style={{
+            backgroundColor: c.symbol,
+            width: '100px',
+            height: '100px',
+          }}
+        >
+          {c.name}
+        </div>
+      ))}
+      {state.color ? (
+        <div
+          style={{
+            backgroundColor: state.color,
+            width: '100px',
+            height: '100px',
+          }}
+        >
+          Active Color
+        </div>
+      ) : (
+        ''
+      )}
+
       <Heading as="h1" size="xl" fontWeight="semibold">
         TzButton
       </Heading>
