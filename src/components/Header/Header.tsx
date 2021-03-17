@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { FaChevronDown } from 'react-icons/fa'
+
 import Countdown from 'react-countdown'
 import {
   VStack,
@@ -12,7 +14,9 @@ import {
   Button,
   Heading,
   useToast,
+  Flex,
 } from '@chakra-ui/core'
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core'
 import { getLink } from '../../util'
 import TzButton from '../TzButton/TzButton'
 
@@ -150,31 +154,6 @@ const Header: React.FC = () => {
 
   const content = state.loaded ? (
     <>
-      {state.availableColors.map((c) => (
-        <div
-          style={{
-            backgroundColor: c.symbol,
-            width: '100px',
-            height: '100px',
-          }}
-        >
-          {c.name}
-        </div>
-      ))}
-      {state.color ? (
-        <div
-          style={{
-            backgroundColor: state.color,
-            width: '100px',
-            height: '100px',
-          }}
-        >
-          Active Color
-        </div>
-      ) : (
-        ''
-      )}
-
       <Heading as="h1" size="xl" fontWeight="semibold">
         TzButton
       </Heading>
@@ -194,9 +173,89 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-      <Square mt="6" onClick={participate}>
+      <Square my="4" onClick={participate}>
         <TzButton />
       </Square>
+      {state.color ? (
+        <Square mb="16">
+          <Flex align="center">
+            <Box
+              style={{
+                backgroundColor: state.color,
+              }}
+              w="24px"
+              h="24px"
+              mr={3}
+              borderRadius="md"
+              boxShadow="lg"
+            ></Box>{' '}
+            {/* TODO: current color name */}
+            Fuzzy Wuzzy
+          </Flex>
+        </Square>
+      ) : (
+        ''
+      )}
+      <Menu>
+        <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+          {/* TODO: display selected color from list instead of "Select color"
+          <Flex align="center">
+            <Box
+              bg="#cc6666"
+              w="24px"
+              h="24px"
+              mr={3}
+              borderRadius="md"
+              boxShadow="lg"
+            ></Box>{' '}
+            Fuzzy Wuzzy
+          </Flex>
+          */}
+          Select color
+        </MenuButton>
+        <MenuList>
+          {/* TODO: show list of colors owned by my address */}
+          {state.availableColors.map((c) => (
+            <MenuItem>
+              <Box
+                style={{
+                  backgroundColor: c.symbol,
+                }}
+                w="24px"
+                h="24px"
+                mr={3}
+                borderRadius="md"
+                boxShadow="lg"
+              ></Box>{' '}
+              {c.name}
+            </MenuItem>
+          ))}
+
+          <MenuItem>
+            <Box
+              bg="#a6e7ff"
+              w="24px"
+              h="24px"
+              mr={3}
+              borderRadius="md"
+              boxShadow="lg"
+            ></Box>{' '}
+            Fresh Air
+          </MenuItem>
+          <MenuItem>
+            <Box
+              bg="#b0c4de"
+              w="24px"
+              h="24px"
+              mr={3}
+              borderRadius="md"
+              boxShadow="lg"
+            ></Box>{' '}
+            Light steel blue
+          </MenuItem>
+        </MenuList>
+      </Menu>
+
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown
         to
