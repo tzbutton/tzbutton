@@ -231,7 +231,7 @@ const Header: React.FC = () => {
         <TzButton
           onMouseOver={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          isHovered={isHovered}
+          ishovered={isHovered.toString()}
           color={selectedColor ? selectedColor : colorState.color}
         />
       </Square>
@@ -269,25 +269,27 @@ const Header: React.FC = () => {
               {selectedColor.name}
             </Flex>
           ) : (
-            'Select color'
+            'Change color'
           )}
         </MenuButton>
         <MenuList>
-          {colorState.availableColors.map((c) => (
-            <MenuItem key={c.token_id} onClick={() => setColor(c)}>
-              <Box
-                style={{
-                  backgroundColor: c.symbol,
-                }}
-                w="24px"
-                h="24px"
-                mr={3}
-                borderRadius="md"
-                boxShadow="lg"
-              ></Box>{' '}
-              {c.name}
-            </MenuItem>
-          ))}
+          {colorState.availableColors.length > 0
+            ? colorState.availableColors.map((c) => (
+                <MenuItem key={c.token_id} onClick={() => setColor(c)}>
+                  <Box
+                    style={{
+                      backgroundColor: c.symbol,
+                    }}
+                    w="24px"
+                    h="24px"
+                    mr={3}
+                    borderRadius="md"
+                    boxShadow="lg"
+                  ></Box>{' '}
+                  {c.name}
+                </MenuItem>
+              ))
+            : `You don't have any colors. Go to tzcolors.io to get some!`}
         </MenuList>
       </Menu>
 

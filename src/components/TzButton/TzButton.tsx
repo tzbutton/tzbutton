@@ -22,7 +22,6 @@ function lightOrDark(hex: string): LightOrDark {
   )
 
   // Using the HSP value, determine whether the color is light or dark
-  console.log(hsp)
   if (hsp > 160) {
     return 'light'
   } else {
@@ -53,7 +52,7 @@ function ColorLuminance(hex: string, lum: number) {
 
 const TzButton: any = (props: any) => {
   const color = props.color ?? { symbol: '#484fc5' }
-  const isHovered = props.isHovered
+  const isHovered = props.ishovered === 'true'
   const brightness = lightOrDark(color.symbol)
   const baseFactor = 0.7 // Higher number = more contrast
   const colorShift = isHovered ? -0.2 : 0.1 // Positive = brighter / negative = darker
@@ -63,7 +62,7 @@ const TzButton: any = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 88.7 78.1"
       {...props}
-      stroke={brightness === 'light' ? 'black' : 'white'}
+      stroke={brightness === 'light' ? 'grey' : 'white'}
     >
       <defs />
       <ellipse
@@ -221,16 +220,6 @@ const TzButton: any = (props: any) => {
     </svg>
   )
 
-  /**
-   * 
-   * style={{ cursor: 'pointer' }}
-      src={isPressed ? TzButtonPressed : TzButtonUnpressed}
-      onMouseEnter={() => setIsPressed(true)}
-      onMouseLeave={() => setIsPressed(false)}
-      width="200px"
-      height="200px"
-      alt="TzButton - click to participate"
-   */
   return (
     <Box
       style={{ cursor: 'pointer' }}
