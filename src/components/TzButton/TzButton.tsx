@@ -1,16 +1,69 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box } from '@chakra-ui/core'
 
-import TzButtonPressed from '../../logos/tzbutton-logo-pressed.svg'
-import TzButtonUnpressed from '../../logos/tzbutton-logo-unpressed.svg'
+type LightOrDark = 'light' | 'dark'
 
-const TzButton: React.FC = () => {
-  const tzButtonIcon = (props: any) => (
+function lightOrDark(hex: string): LightOrDark {
+  const r = '0x' + hex[1] + hex[2]
+  const g = '0x' + hex[3] + hex[4]
+  const b = '0x' + hex[5] + hex[6]
+
+  const colors = {
+    r: +r,
+    g: +g,
+    b: +b,
+  }
+
+  // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+  const hsp = Math.sqrt(
+    0.299 * (colors.r * colors.r) +
+      0.587 * (colors.g * colors.g) +
+      0.114 * (colors.b * colors.b)
+  )
+
+  // Using the HSP value, determine whether the color is light or dark
+  console.log(hsp)
+  if (hsp > 160) {
+    return 'light'
+  } else {
+    return 'dark'
+  }
+}
+
+function ColorLuminance(hex: string, lum: number) {
+  // validate hex string
+  hex = String(hex).replace(/[^0-9a-f]/gi, '')
+  if (hex.length < 6) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+  }
+  lum = lum || 0
+
+  // convert to decimal and change luminosity
+  var rgb = '#',
+    c,
+    i
+  for (i = 0; i < 3; i++) {
+    c = parseInt(hex.substr(i * 2, 2), 16)
+    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16)
+    rgb += ('00' + c).substr(c.length)
+  }
+
+  return rgb
+}
+
+const TzButton: any = (props: any) => {
+  const color = props.color ?? { symbol: '#484fc5' }
+  const isHovered = props.isHovered
+  const brightness = lightOrDark(color.symbol)
+  const baseFactor = 0.7 // Higher number = more contrast
+  const colorShift = isHovered ? -0.2 : 0.1 // Positive = brighter / negative = darker
+
+  const tzButtonIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 88.7 78.1"
       {...props}
-      stroke="red"
+      stroke={brightness === 'light' ? 'black' : 'white'}
     >
       <defs />
       <ellipse
@@ -31,16 +84,76 @@ const TzButton: React.FC = () => {
         gradientTransform="matrix(1 0 0 -1 0 80)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor="#979bde" />
-        <stop offset=".023" stopColor="#8a8eda" />
-        <stop offset=".092" stopColor="#666cce" />
-        <stop offset=".168" stopColor="#484fc5" />
-        <stop offset=".251" stopColor="#2f38bd" />
-        <stop offset=".344" stopColor="#1c25b7" />
-        <stop offset=".452" stopColor="#0f19b2" />
-        <stop offset=".59" stopColor="#0711b0" />
-        <stop offset=".858" stopColor="#050faf" />
-        <stop offset="1" stopColor="#050faf" />
+        <stop
+          offset="0"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.9 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".023"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.8 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".092"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.5 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".168"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.4 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".251"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.1 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".344"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.1 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".452"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.3 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".59"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.4 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".858"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.5 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset="1"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.7 * baseFactor + colorShift
+          )}
+        />
       </linearGradient>
       <ellipse
         stroke="none"
@@ -61,10 +174,31 @@ const TzButton: React.FC = () => {
         gradientTransform="matrix(.9998 -.0175 -.0169 -.9699 4.338 69.277)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset=".136" stopColor="#474dc9" />
-        <stop offset=".348" stopColor="#3c42cc" />
-        <stop offset=".722" stopColor="#1e26d3" />
-        <stop offset="1" stopColor="#040dd9" />
+        <stop
+          offset=".136"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.4 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".348"
+          stopColor={ColorLuminance(
+            color.symbol,
+            0.1 * baseFactor + colorShift
+          )}
+        />
+        <stop
+          offset=".722"
+          stopColor={ColorLuminance(color.symbol, 0 * baseFactor + colorShift)}
+        />
+        <stop
+          offset="1"
+          stopColor={ColorLuminance(
+            color.symbol,
+            -0.1 * baseFactor + colorShift
+          )}
+        />
       </radialGradient>
       <ellipse
         stroke="none"
@@ -86,9 +220,25 @@ const TzButton: React.FC = () => {
       </g>
     </svg>
   )
-  const [isPressed, setIsPressed] = useState(false)
 
-  return <Box as={tzButtonIcon} w="200px" h="200px"></Box>
+  /**
+   * 
+   * style={{ cursor: 'pointer' }}
+      src={isPressed ? TzButtonPressed : TzButtonUnpressed}
+      onMouseEnter={() => setIsPressed(true)}
+      onMouseLeave={() => setIsPressed(false)}
+      width="200px"
+      height="200px"
+      alt="TzButton - click to participate"
+   */
+  return (
+    <Box
+      style={{ cursor: 'pointer' }}
+      as={tzButtonIcon}
+      w="200px"
+      h="200px"
+    ></Box>
+  )
 }
 
 export default TzButton

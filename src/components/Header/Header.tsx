@@ -55,12 +55,13 @@ interface AppState {
   leaderEndTime: Date | undefined
   countdownTime: number
   myAddress: string
-  color: Colors | undefined
-  availableColors: Colors[]
-  selectedColor: Colors | undefined
 }
 
-let selectedColor: Colors | undefined
+interface ColorState {
+  loaded: boolean
+  color: Colors | undefined
+  availableColors: Colors[]
+}
 
 const refreshContractState = async (
   setState: React.Dispatch<React.SetStateAction<AppState>>,
@@ -68,19 +69,10 @@ const refreshContractState = async (
 ) => {
   console.log('refreshing')
   const contractState = await readStateFromContract()
-  const colorState = await readColorStateFromContract()
-  console.log('colorState', colorState)
-  console.log('ACTIVE COLOR', colorState.token_id.toFixed())
-  const myColors: any = colors as any
-  const color = (myColors as Colors[]).find(
-    (c) => c.token_id === colorState.token_id.toNumber()
-  )
   const myAddress = await getMyAddress()
   if (!myAddress) {
     console.log('no address')
   }
-  const availableColors = myAddress ? await getColors(myAddress) : []
-  console.log('AVAILBLE COLORS', availableColors)
   const startDate = new Date(contractState.leadership_start_timestamp)
   const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber()
   const endDate = new Date(startDate.getTime() + secondsToWin * 1000)
@@ -92,9 +84,6 @@ const refreshContractState = async (
     leaderEndTime: endDate,
     countdownTime: secondsToWin,
     myAddress,
-    color,
-    availableColors,
-    selectedColor: selectedColor,
   }
   initialResolve = Promise.resolve(newState)
   setState(newState)
@@ -111,6 +100,33 @@ const refreshContractState = async (
   }
 }
 
+const refreshColorState = async (
+  setState: React.Dispatch<React.SetStateAction<ColorState>>
+) => {
+  console.log('refreshing COLOR state')
+  const colorState = await readColorStateFromContract()
+  console.log('colorState', colorState)
+  console.log('ACTIVE COLOR', colorState.token_id.toFixed())
+  const myColors: any = colors as any
+  const color = (myColors as Colors[]).find(
+    (c) => c.token_id === colorState.token_id.toNumber()
+  )
+  const myAddress = await getMyAddress()
+  if (!myAddress) {
+    console.log('no address')
+  }
+  const availableColors = myAddress ? await getColors(myAddress) : []
+  console.log('AVAILBLE COLORS', availableColors)
+
+  const newState: ColorState = {
+    loaded: true,
+    color,
+    availableColors,
+  }
+  initialColorResolve = Promise.resolve(newState)
+  setState(newState)
+}
+
 // TODO: Get rid of this
 let initialResolve = new Promise(
   (resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
@@ -118,8 +134,15 @@ let initialResolve = new Promise(
   }
 )
 
+// TODO: Get rid of this
+let initialColorResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<ColorState>>, reject) => {
+    refreshColorState(resolve)
+  }
+)
+
 // TODO: Move this into component?
-const globalState = {
+const globalState: AppState = {
   loaded: false,
   potAmount: '',
   leader: '',
@@ -127,14 +150,22 @@ const globalState = {
   leaderEndTime: undefined,
   myAddress: '',
   countdownTime: 0,
+}
+
+const globalColorState: ColorState = {
+  loaded: false,
   color: undefined,
   availableColors: [],
-  selectedColor: undefined,
 }
 
 const Header: React.FC = () => {
   const toast = useToast()
   const [state, setState] = useState<AppState>(globalState)
+  const [selectedColor, setSelectedColor] = useState<Colors | undefined>(
+    undefined
+  )
+  const [colorState, setColorState] = useState<ColorState>(globalColorState)
+  const [isHovered, setIsHovered] = useState<boolean>(false)
 
   const intervalRef = useRef<undefined | NodeJS.Timeout>()
 
@@ -142,12 +173,15 @@ const Header: React.FC = () => {
     console.log('setting up interval')
 
     initialResolve.then(setState)
+    initialColorResolve.then(setColorState)
     intervalRef.current = setInterval(async () => {
       const hasUpdates = await checkRecentBlockForUpdates()
       if (hasUpdates) {
         refreshContractState(setState, toast)
+        refreshColorState(setColorState)
       }
     }, 10 * 1000)
+
     return () => {
       console.log('removing interval')
       if (intervalRef.current) {
@@ -156,19 +190,20 @@ const Header: React.FC = () => {
     }
   }, [toast])
 
+  const tzColorsLink = colorState.color
+    ? getLink(
+        colorState.color.name,
+        `https://tzcolors.io/color/${colorState.color.token_id}`
+      )
+    : ''
+
   const leaderLink = getLink(
     state.leader,
     getTezBlockLinkForAddress(state.leader)
   )
 
   const setColor = (c: Colors) => {
-    selectedColor = c
-    setState({
-      ...state,
-      selectedColor: c,
-    })
-    refreshContractState(setState) // remove
-    console.log('UPDATED STATE', state, c)
+    setSelectedColor(c)
   }
 
   const content = state.loaded ? (
@@ -192,15 +227,20 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-      <Square my="4" onClick={participate}>
-        <TzButton />
+      <Square my="4" onClick={() => participate(selectedColor)}>
+        <TzButton
+          onMouseOver={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          isHovered={isHovered}
+          color={selectedColor ? selectedColor : colorState.color}
+        />
       </Square>
-      {state.color ? (
+      {colorState.color ? (
         <Square mb="16">
           <Flex align="center">
             <Box
               style={{
-                backgroundColor: state.color.symbol,
+                backgroundColor: colorState.color.symbol,
               }}
               w="24px"
               h="24px"
@@ -208,7 +248,7 @@ const Header: React.FC = () => {
               borderRadius="md"
               boxShadow="lg"
             ></Box>{' '}
-            {state.color.name}
+            {tzColorsLink}
           </Flex>
         </Square>
       ) : (
@@ -216,26 +256,25 @@ const Header: React.FC = () => {
       )}
       <Menu>
         <MenuButton as={Button} rightIcon={<FaChevronDown />}>
-          {state.selectedColor ? (
+          {selectedColor ? (
             <Flex align="center">
               <Box
-                bg={state.selectedColor.symbol}
+                bg={selectedColor.symbol}
                 w="24px"
                 h="24px"
                 mr={3}
                 borderRadius="md"
                 boxShadow="lg"
               ></Box>{' '}
-              {state.selectedColor.name}
+              {selectedColor.name}
             </Flex>
           ) : (
             'Select color'
           )}
         </MenuButton>
         <MenuList>
-          {/* TODO: show list of colors owned by my address */}
-          {state.availableColors.map((c) => (
-            <MenuItem onClick={() => setColor(c)}>
+          {colorState.availableColors.map((c) => (
+            <MenuItem key={c.token_id} onClick={() => setColor(c)}>
               <Box
                 style={{
                   backgroundColor: c.symbol,
@@ -249,21 +288,6 @@ const Header: React.FC = () => {
               {c.name}
             </MenuItem>
           ))}
-          <MenuItem
-            onClick={() => setColor({ name: 'Black', symbol: '123123' } as any)}
-          >
-            <Box
-              style={{
-                backgroundColor: '000000',
-              }}
-              w="24px"
-              h="24px"
-              mr={3}
-              borderRadius="md"
-              boxShadow="lg"
-            ></Box>{' '}
-            Black
-          </MenuItem>
         </MenuList>
       </Menu>
 

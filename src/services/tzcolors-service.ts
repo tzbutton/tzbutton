@@ -18,8 +18,8 @@ let colorFetchingPromise: Promise<void> | undefined = undefined
 export const getColors = async (address: string): Promise<Colors[]> => {
     if (!colorFetchingPromise) {
         colorFetchingPromise = fetchColors(address)
-        await colorFetchingPromise
     }
+    await colorFetchingPromise
     return colors
 }
 

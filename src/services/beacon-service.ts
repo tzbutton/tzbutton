@@ -3,7 +3,7 @@ import { TezosToolkit, OpKind } from '@taquito/taquito'
 import { BigNumber } from 'bignumber.js'
 
 import { TZBUTTON_AMOUNT_MUTEZ, TZBUTTON_COLOR_CONTRACT, TZBUTTON_CONTRACT } from '../constants'
-import { getColors } from './tzcolors-service'
+import { Colors, getColors } from './tzcolors-service'
 
 const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
 
@@ -50,28 +50,31 @@ const connectToBeacon = async () => {
   return wallet
 }
 
-export const participate = async (): Promise<void> => {
+export const participate = async (color?: Colors): Promise<void> => {
   const wallet = await connectToBeacon()
 
-  await wallet.client.requestOperation({
-    operationDetails: [
-      {
-        kind: 'transaction' as any,
-        amount: TZBUTTON_AMOUNT_MUTEZ,
-        destination: TZBUTTON_CONTRACT,
-      },
-      {
-        kind: 'transaction' as any,
-        amount: '0',
-        destination: 'KT1GFVf3ZVLiSxgU5EqBrmboEEU16prAdeJQ',
-        parameters: {
-          entrypoint: 'set_color',
-          value: {
-            int: "925"
-          }
+  const operations: any[] = [{
+    kind: 'transaction' as any,
+    amount: TZBUTTON_AMOUNT_MUTEZ,
+    destination: TZBUTTON_CONTRACT,
+  }]
+
+  if (color) {
+    operations.push({
+      kind: 'transaction' as any,
+      amount: '0',
+      destination: 'KT1GFVf3ZVLiSxgU5EqBrmboEEU16prAdeJQ',
+      parameters: {
+        entrypoint: 'set_color',
+        value: {
+          int: color.token_id.toString()
         }
-      },
-    ],
+      }
+    })
+  }
+
+  await wallet.client.requestOperation({
+    operationDetails: operations,
   })
 }
 
