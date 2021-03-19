@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios'
 import BigNumber from 'bignumber.js'
 
 import colorsJSON from '../colors.json'
+import { TZCOLORS_CONTRACT } from '../constants'
 
 const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
 
@@ -25,7 +26,7 @@ export const getColors = async (address: string): Promise<Colors[]> => {
 
 export const fetchColors = async (address: string): Promise<void> => {
     console.log('FETCHING COLORS OF ', address)
-    const contract = await Tezos.contract.at('KT1FyaDqiMQWg7Exo7VUiXAgZbd2kCzo3d4s')
+    const contract = await Tezos.contract.at(TZCOLORS_CONTRACT) // TzColors contract
 
     const requests = []
 
@@ -38,7 +39,7 @@ export const fetchColors = async (address: string): Promise<void> => {
 
     const params = await contract.methods.balance_of(
         requests,
-        'KT1PhV2KXC1Nbu4qaJkcYZirzKqjNtjkNyiC'
+        'KT1PhV2KXC1Nbu4qaJkcYZirzKqjNtjkNyiC' // Callback address
     ).toTransferParams()
 
     console.log('params', params)

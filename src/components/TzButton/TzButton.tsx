@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/core'
 
 type LightOrDark = 'light' | 'dark'
 
+// https://awik.io/determine-color-bright-dark-using-javascript/
 function lightOrDark(hex: string): LightOrDark {
   const r = '0x' + hex[1] + hex[2]
   const g = '0x' + hex[3] + hex[4]
@@ -29,6 +30,7 @@ function lightOrDark(hex: string): LightOrDark {
   }
 }
 
+// https://www.sitepoint.com/javascript-generate-lighter-darker-color/
 function ColorLuminance(hex: string, lum: number) {
   // validate hex string
   hex = String(hex).replace(/[^0-9a-f]/gi, '')

@@ -63,7 +63,7 @@ export const participate = async (color?: Colors): Promise<void> => {
     operations.push({
       kind: 'transaction' as any,
       amount: '0',
-      destination: 'KT1GFVf3ZVLiSxgU5EqBrmboEEU16prAdeJQ',
+      destination: TZBUTTON_COLOR_CONTRACT,
       parameters: {
         entrypoint: 'set_color',
         value: {
