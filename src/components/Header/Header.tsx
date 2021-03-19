@@ -55,9 +55,12 @@ interface AppState {
   leaderEndTime: Date | undefined
   countdownTime: number
   myAddress: string
-  color: string | undefined
+  color: Colors | undefined
   availableColors: Colors[]
+  selectedColor: Colors | undefined
 }
+
+let selectedColor: Colors | undefined
 
 const refreshContractState = async (
   setState: React.Dispatch<React.SetStateAction<AppState>>,
@@ -68,11 +71,15 @@ const refreshContractState = async (
   const colorState = await readColorStateFromContract()
   console.log('colorState', colorState)
   console.log('ACTIVE COLOR', colorState.token_id.toFixed())
-  const color =
-    colors.find((c) => c.token_id === colorState.token_id.toNumber())?.symbol ??
-    ''
+  const myColors: any = colors as any
+  const color = (myColors as Colors[]).find(
+    (c) => c.token_id === colorState.token_id.toNumber()
+  )
   const myAddress = await getMyAddress()
-  const availableColors = await getColors(myAddress)
+  if (!myAddress) {
+    console.log('no address')
+  }
+  const availableColors = myAddress ? await getColors(myAddress) : []
   console.log('AVAILBLE COLORS', availableColors)
   const startDate = new Date(contractState.leadership_start_timestamp)
   const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber()
@@ -87,6 +94,7 @@ const refreshContractState = async (
     myAddress,
     color,
     availableColors,
+    selectedColor: selectedColor,
   }
   initialResolve = Promise.resolve(newState)
   setState(newState)
@@ -119,8 +127,9 @@ const globalState = {
   leaderEndTime: undefined,
   myAddress: '',
   countdownTime: 0,
-  color: '',
+  color: undefined,
   availableColors: [],
+  selectedColor: undefined,
 }
 
 const Header: React.FC = () => {
@@ -152,6 +161,16 @@ const Header: React.FC = () => {
     getTezBlockLinkForAddress(state.leader)
   )
 
+  const setColor = (c: Colors) => {
+    selectedColor = c
+    setState({
+      ...state,
+      selectedColor: c,
+    })
+    refreshContractState(setState) // remove
+    console.log('UPDATED STATE', state, c)
+  }
+
   const content = state.loaded ? (
     <>
       <Heading as="h1" size="xl" fontWeight="semibold">
@@ -181,7 +200,7 @@ const Header: React.FC = () => {
           <Flex align="center">
             <Box
               style={{
-                backgroundColor: state.color,
+                backgroundColor: state.color.symbol,
               }}
               w="24px"
               h="24px"
@@ -189,8 +208,7 @@ const Header: React.FC = () => {
               borderRadius="md"
               boxShadow="lg"
             ></Box>{' '}
-            {/* TODO: current color name */}
-            Fuzzy Wuzzy
+            {state.color.name}
           </Flex>
         </Square>
       ) : (
@@ -198,25 +216,26 @@ const Header: React.FC = () => {
       )}
       <Menu>
         <MenuButton as={Button} rightIcon={<FaChevronDown />}>
-          {/* TODO: display selected color from list instead of "Select color"
-          <Flex align="center">
-            <Box
-              bg="#cc6666"
-              w="24px"
-              h="24px"
-              mr={3}
-              borderRadius="md"
-              boxShadow="lg"
-            ></Box>{' '}
-            Fuzzy Wuzzy
-          </Flex>
-          */}
-          Select color
+          {state.selectedColor ? (
+            <Flex align="center">
+              <Box
+                bg={state.selectedColor.symbol}
+                w="24px"
+                h="24px"
+                mr={3}
+                borderRadius="md"
+                boxShadow="lg"
+              ></Box>{' '}
+              {state.selectedColor.name}
+            </Flex>
+          ) : (
+            'Select color'
+          )}
         </MenuButton>
         <MenuList>
           {/* TODO: show list of colors owned by my address */}
           {state.availableColors.map((c) => (
-            <MenuItem>
+            <MenuItem onClick={() => setColor(c)}>
               <Box
                 style={{
                   backgroundColor: c.symbol,
@@ -230,28 +249,20 @@ const Header: React.FC = () => {
               {c.name}
             </MenuItem>
           ))}
-
-          <MenuItem>
+          <MenuItem
+            onClick={() => setColor({ name: 'Black', symbol: '123123' } as any)}
+          >
             <Box
-              bg="#a6e7ff"
+              style={{
+                backgroundColor: '000000',
+              }}
               w="24px"
               h="24px"
               mr={3}
               borderRadius="md"
               boxShadow="lg"
             ></Box>{' '}
-            Fresh Air
-          </MenuItem>
-          <MenuItem>
-            <Box
-              bg="#b0c4de"
-              w="24px"
-              h="24px"
-              mr={3}
-              borderRadius="md"
-              boxShadow="lg"
-            ></Box>{' '}
-            Light steel blue
+            Black
           </MenuItem>
         </MenuList>
       </Menu>

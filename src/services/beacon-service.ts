@@ -63,7 +63,7 @@ export const participate = async (): Promise<void> => {
       {
         kind: 'transaction' as any,
         amount: '0',
-        destination: 'KT1RPW5kTX6WFxg8JK34rGEU24gqEEudyfvz',
+        destination: 'KT1GFVf3ZVLiSxgU5EqBrmboEEU16prAdeJQ',
         parameters: {
           entrypoint: 'set_color',
           value: {

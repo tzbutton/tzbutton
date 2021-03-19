@@ -7,7 +7,7 @@ import colorsJSON from '../colors.json'
 const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
 
 export interface Colors {
-    token_id: string
+    token_id: number
     symbol: string
     name: string
 }
