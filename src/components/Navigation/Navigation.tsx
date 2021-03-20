@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Link,
@@ -7,21 +7,47 @@ import {
   HStack,
   useColorMode,
   useColorModeValue,
+  Button,
 } from '@chakra-ui/core'
+
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core'
 
 import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa'
 import { TZBUTTON_CONTRACT } from '../../constants'
-import { setBeaconColorMode } from '../../services/beacon-service'
+import {
+  connectToBeacon,
+  disconnectFromBeacon,
+  getMyAddress,
+  getTezBlockLinkForAddress,
+  setBeaconColorMode,
+} from '../../services/beacon-service'
 
 const Navigation: React.FC = () => {
   const { toggleColorMode: toggleMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
+  const [address, setAddress] = useState<string>('')
 
   const toggle = () => {
     toggleMode()
     setBeaconColorMode(text)
   }
+
+  const openBlockexplorer = () => {
+    window.open(getTezBlockLinkForAddress(address), '_blank')
+  }
+
+  const connect = async () => {
+    await connectToBeacon()
+    getMyAddress().then(setAddress)
+  }
+
+  const disconnect = async () => {
+    await disconnectFromBeacon()
+    getMyAddress().then(setAddress)
+  }
+
+  getMyAddress().then(setAddress)
 
   return (
     <Flex
@@ -67,6 +93,29 @@ const Navigation: React.FC = () => {
             icon={<SwitchIcon />}
           />
         </HStack>
+        <Menu>
+          <MenuButton
+            ml="3"
+            as={Button}
+            onClick={() => {
+              connect()
+            }}
+          >
+            {address ? address : 'Connect Wallet'}
+          </MenuButton>
+          {address ? (
+            <MenuList>
+              <MenuItem onClick={() => openBlockexplorer()}>
+                Open Blockexplorer
+              </MenuItem>
+              <MenuItem onClick={() => disconnect()}>
+                Disconnect Wallet
+              </MenuItem>
+            </MenuList>
+          ) : (
+            ''
+          )}
+        </Menu>
       </Flex>
     </Flex>
   )

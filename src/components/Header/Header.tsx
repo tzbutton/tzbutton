@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { FaChevronDown } from 'react-icons/fa'
+
 import Countdown from 'react-countdown'
 import {
   VStack,
@@ -12,7 +14,9 @@ import {
   Button,
   Heading,
   useToast,
+  Flex,
 } from '@chakra-ui/core'
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core'
 import { getLink } from '../../util'
 import TzButton from '../TzButton/TzButton'
 
@@ -20,6 +24,7 @@ import {
   getPotAmount,
   checkRecentBlockForUpdates,
   readStateFromContract,
+  readColorStateFromContract,
   participate,
   withdraw,
   openTezBlock,
@@ -28,6 +33,9 @@ import {
   getTezBlockLinkForAddress,
 } from '../../services/beacon-service'
 import { getNextCountdown } from '../../services/countdown-service'
+
+import colors from '../../colors.json'
+import { Colors, getColors } from '../../services/tzcolors-service'
 
 const WinnerAnnouncement = () => (
   <span>
@@ -38,7 +46,6 @@ const WinnerAnnouncement = () => (
     </Button>
   </span>
 )
-
 interface AppState {
   loaded: boolean
   potAmount: string
@@ -47,6 +54,11 @@ interface AppState {
   leaderEndTime: Date | undefined
   countdownTime: number
   myAddress: string
+}
+
+interface ColorState {
+  loaded: boolean
+  color: Colors | undefined
 }
 
 const refreshContractState = async (
@@ -83,6 +95,33 @@ const refreshContractState = async (
   }
 }
 
+const refreshColorState = async (
+  setState: React.Dispatch<React.SetStateAction<ColorState>>
+) => {
+  const colorState = await readColorStateFromContract()
+  const myColors: any = colors as any
+  const color = (myColors as Colors[]).find(
+    (c) => c.token_id === colorState.token_id.toNumber()
+  )
+
+  const newState: ColorState = {
+    loaded: true,
+    color,
+  }
+  initialColorResolve = Promise.resolve(newState)
+  setState(newState)
+}
+
+const getMyColors = async (
+  setState: React.Dispatch<React.SetStateAction<Colors[]>>
+) => {
+  const myAddress = await getMyAddress()
+
+  const availableColors = myAddress ? await getColors(myAddress) : []
+
+  setState(availableColors)
+}
+
 // TODO: Get rid of this
 let initialResolve = new Promise(
   (resolve: React.Dispatch<React.SetStateAction<AppState>>, reject) => {
@@ -90,8 +129,22 @@ let initialResolve = new Promise(
   }
 )
 
+// TODO: Get rid of this
+let initialColorResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<ColorState>>, reject) => {
+    refreshColorState(resolve)
+  }
+)
+
+// TODO: Get rid of this
+let initialMyColorResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<Colors[]>>, reject) => {
+    getMyColors(resolve)
+  }
+)
+
 // TODO: Move this into component?
-const globalState = {
+const globalState: AppState = {
   loaded: false,
   potAmount: '',
   leader: '',
@@ -101,22 +154,38 @@ const globalState = {
   countdownTime: 0,
 }
 
+const globalColorState: ColorState = {
+  loaded: false,
+  color: undefined,
+}
+
 const Header: React.FC = () => {
   const toast = useToast()
   const [state, setState] = useState<AppState>(globalState)
+  const [selectedColor, setSelectedColor] = useState<Colors | undefined>(
+    undefined
+  )
+  const [colorState, setColorState] = useState<ColorState>(globalColorState)
+  const [isHovered, setIsHovered] = useState<boolean>(false)
+
+  const [myColors, setMyColors] = useState<Colors[]>([])
 
   const intervalRef = useRef<undefined | NodeJS.Timeout>()
 
   useEffect(() => {
     console.log('setting up interval')
 
+    initialMyColorResolve.then(setMyColors)
     initialResolve.then(setState)
+    initialColorResolve.then(setColorState)
     intervalRef.current = setInterval(async () => {
       const hasUpdates = await checkRecentBlockForUpdates()
       if (hasUpdates) {
         refreshContractState(setState, toast)
+        refreshColorState(setColorState)
       }
     }, 10 * 1000)
+
     return () => {
       console.log('removing interval')
       if (intervalRef.current) {
@@ -125,10 +194,21 @@ const Header: React.FC = () => {
     }
   }, [toast])
 
+  const tzColorsLink = colorState.color
+    ? getLink(
+        colorState.color.name,
+        `https://tzcolors.io/color/${colorState.color.token_id}`
+      )
+    : ''
+
   const leaderLink = getLink(
     state.leader,
     getTezBlockLinkForAddress(state.leader)
   )
+
+  const setColor = (c: Colors) => {
+    setSelectedColor(c)
+  }
 
   const content = state.loaded ? (
     <>
@@ -151,9 +231,92 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-      <Square mt="6" onClick={participate}>
-        <TzButton />
+      <Square
+        style={{ cursor: 'pointer' }}
+        mt="4"
+        onClick={() => participate(selectedColor)}
+      >
+        <TzButton
+          onMouseOver={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          ishovered={isHovered.toString()}
+          color={selectedColor ? selectedColor : colorState.color}
+        />
       </Square>
+      {colorState.color ? (
+        <Square mb="16">
+          <Flex align="center">
+            <Box
+              style={{
+                backgroundColor: colorState.color.symbol,
+              }}
+              w="24px"
+              h="24px"
+              mr={3}
+              borderRadius="md"
+              boxShadow="lg"
+            ></Box>{' '}
+            {tzColorsLink}
+          </Flex>
+        </Square>
+      ) : (
+        ''
+      )}
+      <Menu>
+        <MenuButton
+          as={Button}
+          rightIcon={<FaChevronDown />}
+          disabled={myColors.length === 0}
+        >
+          {selectedColor ? (
+            <Flex align="center">
+              <Box
+                bg={selectedColor.symbol}
+                w="24px"
+                h="24px"
+                mr={3}
+                borderRadius="md"
+                boxShadow="lg"
+              ></Box>{' '}
+              {selectedColor.name}
+            </Flex>
+          ) : (
+            'Change color'
+          )}
+        </MenuButton>
+        <MenuList>
+          {myColors.map((c) => (
+            <MenuItem key={c.token_id} onClick={() => setColor(c)}>
+              <Box
+                style={{
+                  backgroundColor: c.symbol,
+                }}
+                w="24px"
+                h="24px"
+                mr={3}
+                borderRadius="md"
+                boxShadow="lg"
+              ></Box>{' '}
+              {c.name}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+      {myColors.length === 0 ? (
+        <>
+          <Text py="4" opacity={0.7}>
+            You can select a custom color for everyone to see if you own
+            the&nbsp;
+            <Link href={`https://tzcolors.io`} isExternal>
+              tzcolors
+            </Link>
+            &nbsp;NFT.
+          </Text>
+        </>
+      ) : (
+        ''
+      )}
+
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown
         to
