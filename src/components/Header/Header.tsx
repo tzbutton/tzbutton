@@ -145,6 +145,13 @@ let initialColorResolve = new Promise(
   }
 )
 
+// TODO: Get rid of this
+let initialMyColorResolve = new Promise(
+  (resolve: React.Dispatch<React.SetStateAction<Colors[]>>, reject) => {
+    getMyColors(resolve)
+  }
+)
+
 // TODO: Move this into component?
 const globalState: AppState = {
   loaded: false,
@@ -177,8 +184,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     console.log('setting up interval')
 
-    getMyColors(setMyColors)
-
+    initialMyColorResolve.then(setMyColors)
     initialResolve.then(setState)
     initialColorResolve.then(setColorState)
     intervalRef.current = setInterval(async () => {
