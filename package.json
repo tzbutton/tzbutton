@@ -7,7 +7,6 @@
     "@chakra-ui/core": "^1.0.0-rc.0",
     "@chakra-ui/theme": "^1.0.0-rc.0",
     "@taquito/beacon-wallet": "^8.0.6-beta.0",
-    "@taquito/rpc": "^8.0.6-beta.0",
     "@taquito/taquito": "^8.0.6-beta.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
