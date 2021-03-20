@@ -37,6 +37,10 @@ import { getNextCountdown } from '../../services/countdown-service'
 import colors from '../../colors.json'
 import { Colors, getColors } from '../../services/tzcolors-service'
 
+const capitalize = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 const WinnerAnnouncement = () => (
   <span>
     The game is over!
@@ -256,7 +260,8 @@ const Header: React.FC = () => {
               borderRadius="md"
               boxShadow="lg"
             ></Box>{' '}
-            {tzColorsLink}
+            {tzColorsLink}&nbsp;
+            <p>({capitalize(colorState.color.category)})</p>
           </Flex>
         </Square>
       ) : (

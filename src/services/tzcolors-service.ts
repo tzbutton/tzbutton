@@ -10,7 +10,8 @@ const Tezos = new TezosToolkit(NODE_URL)
 export interface Colors {
     token_id: number
     symbol: string
-    name: string
+    name: string,
+    category: string
 }
 
 let colors: Colors[] = []
