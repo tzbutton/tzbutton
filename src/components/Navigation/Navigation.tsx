@@ -7,7 +7,10 @@ import {
   HStack,
   useColorMode,
   useColorModeValue,
+  Button,
 } from '@chakra-ui/core'
+
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core'
 
 import { FaGithub, FaMoon, FaSun, FaBell } from 'react-icons/fa'
 import { TZBUTTON_CONTRACT } from '../../constants'
@@ -67,6 +70,18 @@ const Navigation: React.FC = () => {
             icon={<SwitchIcon />}
           />
         </HStack>
+        <Menu>
+          <MenuButton ml="3" as={Button}>
+            Connect Wallet
+            {/* TODO: Show if connected 
+            tz1...askjd */}
+          </MenuButton>
+          {/* TODO: only show if connected */}
+          <MenuList>
+            <MenuItem>Open Blockexplorer</MenuItem>
+            <MenuItem>Disconnect Wallet</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
     </Flex>
   )
