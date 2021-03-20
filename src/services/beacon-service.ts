@@ -34,7 +34,7 @@ const getBeaconInstance = async () => {
   return globalWallet
 }
 
-const connectToBeacon = async () => {
+export const connectToBeacon = async () => {
   console.log('CONNECTING TO BEACON')
   const wallet = await getBeaconInstance()
 
@@ -48,6 +48,11 @@ const connectToBeacon = async () => {
   await wallet.requestPermissions()
 
   return wallet
+}
+
+export const disconnectFromBeacon = async () => {
+  const wallet = await getBeaconInstance()
+  await wallet.clearActiveAccount()
 }
 
 export const participate = async (color?: Colors): Promise<void> => {

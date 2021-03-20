@@ -45,9 +45,10 @@ export const fetchColors = async (address: string): Promise<void> => {
     console.log('params', params)
 
     const fakeSignature: string = 'sigUHx32f9wesZ1n2BWpixXz4AQaZggEtchaQNHYGRCoWNAXx45WGW2ua3apUUUAGMLPwAU41QoaFCzVSL61VaessLg4YbbP'
+    const fakeAddress: string = 'tz1MJx9vhaNRSimcuXPK2rW4fLccQnDAnVKJ'
 
     const results = await Promise.all([
-        axios.get(`${NODE_URL}/chains/main/blocks/head/context/contracts/${address}/counter`),
+        axios.get(`${NODE_URL}/chains/main/blocks/head/context/contracts/${fakeAddress}/counter`),
         axios.get<{ chain_id: string, hash: string }>(`${NODE_URL}/chains/main/blocks/head`),
     ])
 
@@ -59,7 +60,7 @@ export const fetchColors = async (address: string): Promise<void> => {
         operation: {
             branch: block.hash,
             contents: [{
-                source: address,
+                source: fakeAddress,
                 kind: OpKind.TRANSACTION,
                 fee: "999999",
                 counter,
