@@ -103,7 +103,6 @@ const Navigation: React.FC = () => {
           >
             {address ? address : 'Connect Wallet'}
           </MenuButton>
-          {/* TODO: only show if connected */}
           {address ? (
             <MenuList>
               <MenuItem onClick={() => openBlockexplorer()}>

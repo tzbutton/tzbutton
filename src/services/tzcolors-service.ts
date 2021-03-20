@@ -42,8 +42,6 @@ export const fetchColors = async (address: string): Promise<void> => {
         'KT1PhV2KXC1Nbu4qaJkcYZirzKqjNtjkNyiC' // Callback address
     ).toTransferParams()
 
-    console.log('params', params)
-
     const fakeSignature: string = 'sigUHx32f9wesZ1n2BWpixXz4AQaZggEtchaQNHYGRCoWNAXx45WGW2ua3apUUUAGMLPwAU41QoaFCzVSL61VaessLg4YbbP'
     const fakeAddress: string = 'tz1MJx9vhaNRSimcuXPK2rW4fLccQnDAnVKJ'
 
@@ -82,8 +80,6 @@ export const fetchColors = async (address: string): Promise<void> => {
             console.error('runOperationError', runOperationError)
         })
 
-    console.log('RES', response)
-
     const owned = response.data.contents[0].metadata.internal_operation_results[0].parameters.value.filter((el: any) => {
         return el.args[1].int === '1'
     }).map((el: any) => el.args[0].args[0].int)
@@ -92,5 +88,5 @@ export const fetchColors = async (address: string): Promise<void> => {
         return colorsJSON.find((c) => c.token_id === Number(o))
     })
 
-    console.log(colors)
+    console.log('Colors:', colors)
 }

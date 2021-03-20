@@ -68,9 +68,6 @@ const refreshContractState = async (
   console.log('refreshing')
   const contractState = await readStateFromContract()
   const myAddress = await getMyAddress()
-  if (!myAddress) {
-    console.log('no address')
-  }
   const startDate = new Date(contractState.leadership_start_timestamp)
   const secondsToWin = contractState.countdown_milliseconds.div(1000).toNumber()
   const endDate = new Date(startDate.getTime() + secondsToWin * 1000)
@@ -101,10 +98,7 @@ const refreshContractState = async (
 const refreshColorState = async (
   setState: React.Dispatch<React.SetStateAction<ColorState>>
 ) => {
-  console.log('refreshing COLOR state')
   const colorState = await readColorStateFromContract()
-  console.log('colorState', colorState)
-  console.log('ACTIVE COLOR', colorState.token_id.toFixed())
   const myColors: any = colors as any
   const color = (myColors as Colors[]).find(
     (c) => c.token_id === colorState.token_id.toNumber()
@@ -122,11 +116,8 @@ const getMyColors = async (
   setState: React.Dispatch<React.SetStateAction<Colors[]>>
 ) => {
   const myAddress = await getMyAddress()
-  if (!myAddress) {
-    console.log('no address')
-  }
+
   const availableColors = myAddress ? await getColors(myAddress) : []
-  console.log('AVAILBLE COLORS', availableColors)
 
   setState(availableColors)
 }
