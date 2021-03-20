@@ -46,7 +46,6 @@ const WinnerAnnouncement = () => (
     </Button>
   </span>
 )
-
 interface AppState {
   loaded: boolean
   potAmount: string
@@ -255,7 +254,11 @@ const Header: React.FC = () => {
         ''
       )}
       <Menu>
-        <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+        <MenuButton
+          as={Button}
+          rightIcon={<FaChevronDown />}
+          disabled={colorState.availableColors.length === 0}
+        >
           {selectedColor ? (
             <Flex align="center">
               <Box
@@ -273,25 +276,37 @@ const Header: React.FC = () => {
           )}
         </MenuButton>
         <MenuList>
-          {colorState.availableColors.length > 0
-            ? colorState.availableColors.map((c) => (
-                <MenuItem key={c.token_id} onClick={() => setColor(c)}>
-                  <Box
-                    style={{
-                      backgroundColor: c.symbol,
-                    }}
-                    w="24px"
-                    h="24px"
-                    mr={3}
-                    borderRadius="md"
-                    boxShadow="lg"
-                  ></Box>{' '}
-                  {c.name}
-                </MenuItem>
-              ))
-            : `You don't have any colors. Go to tzcolors.io to get some!`}
+          {colorState.availableColors.map((c) => (
+            <MenuItem key={c.token_id} onClick={() => setColor(c)}>
+              <Box
+                style={{
+                  backgroundColor: c.symbol,
+                }}
+                w="24px"
+                h="24px"
+                mr={3}
+                borderRadius="md"
+                boxShadow="lg"
+              ></Box>{' '}
+              {c.name}
+            </MenuItem>
+          ))}
         </MenuList>
       </Menu>
+      {colorState.availableColors.length === 0 ? (
+        <>
+          <Text py="4" opacity={0.7}>
+            You can select a custom color for everyone to see if you own
+            the&nbsp;
+            <Link href={`https://tzcolors.io`} isExternal>
+              tzcolors
+            </Link>
+            &nbsp;NFT.
+          </Text>
+        </>
+      ) : (
+        ''
+      )}
 
       <Text mt="6">
         Click the button to become the <b>new leader</b> and reset the countdown

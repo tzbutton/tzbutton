@@ -61,6 +61,8 @@ const TzButton: any = (props: any) => {
 
   const tzButtonIcon = () => (
     <svg
+      width="200px"
+      height="200px"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 88.7 78.1"
       {...props}
@@ -222,14 +224,7 @@ const TzButton: any = (props: any) => {
     </svg>
   )
 
-  return (
-    <Box
-      style={{ cursor: 'pointer' }}
-      as={tzButtonIcon}
-      w="200px"
-      h="200px"
-    ></Box>
-  )
+  return <Box style={{ cursor: 'pointer' }} as={tzButtonIcon}></Box>
 }
 
 export default TzButton
