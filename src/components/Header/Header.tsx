@@ -226,7 +226,11 @@ const Header: React.FC = () => {
           'Loading...'
         )}
       </Text>
-      <Square my="4" onClick={() => participate(selectedColor)}>
+      <Square
+        style={{ cursor: 'pointer' }}
+        mt="4"
+        onClick={() => participate(selectedColor)}
+      >
         <TzButton
           onMouseOver={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
