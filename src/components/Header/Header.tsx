@@ -59,7 +59,6 @@ interface AppState {
 interface ColorState {
   loaded: boolean
   color: Colors | undefined
-  availableColors: Colors[]
 }
 
 const refreshContractState = async (
@@ -110,6 +109,18 @@ const refreshColorState = async (
   const color = (myColors as Colors[]).find(
     (c) => c.token_id === colorState.token_id.toNumber()
   )
+
+  const newState: ColorState = {
+    loaded: true,
+    color,
+  }
+  initialColorResolve = Promise.resolve(newState)
+  setState(newState)
+}
+
+const getMyColors = async (
+  setState: React.Dispatch<React.SetStateAction<Colors[]>>
+) => {
   const myAddress = await getMyAddress()
   if (!myAddress) {
     console.log('no address')
@@ -117,13 +128,7 @@ const refreshColorState = async (
   const availableColors = myAddress ? await getColors(myAddress) : []
   console.log('AVAILBLE COLORS', availableColors)
 
-  const newState: ColorState = {
-    loaded: true,
-    color,
-    availableColors,
-  }
-  initialColorResolve = Promise.resolve(newState)
-  setState(newState)
+  setState(availableColors)
 }
 
 // TODO: Get rid of this
@@ -154,7 +159,6 @@ const globalState: AppState = {
 const globalColorState: ColorState = {
   loaded: false,
   color: undefined,
-  availableColors: [],
 }
 
 const Header: React.FC = () => {
@@ -166,10 +170,14 @@ const Header: React.FC = () => {
   const [colorState, setColorState] = useState<ColorState>(globalColorState)
   const [isHovered, setIsHovered] = useState<boolean>(false)
 
+  const [myColors, setMyColors] = useState<Colors[]>([])
+
   const intervalRef = useRef<undefined | NodeJS.Timeout>()
 
   useEffect(() => {
     console.log('setting up interval')
+
+    getMyColors(setMyColors)
 
     initialResolve.then(setState)
     initialColorResolve.then(setColorState)
@@ -261,7 +269,7 @@ const Header: React.FC = () => {
         <MenuButton
           as={Button}
           rightIcon={<FaChevronDown />}
-          disabled={colorState.availableColors.length === 0}
+          disabled={myColors.length === 0}
         >
           {selectedColor ? (
             <Flex align="center">
@@ -280,7 +288,7 @@ const Header: React.FC = () => {
           )}
         </MenuButton>
         <MenuList>
-          {colorState.availableColors.map((c) => (
+          {myColors.map((c) => (
             <MenuItem key={c.token_id} onClick={() => setColor(c)}>
               <Box
                 style={{
@@ -297,7 +305,7 @@ const Header: React.FC = () => {
           ))}
         </MenuList>
       </Menu>
-      {colorState.availableColors.length === 0 ? (
+      {myColors.length === 0 ? (
         <>
           <Text py="4" opacity={0.7}>
             You can select a custom color for everyone to see if you own
