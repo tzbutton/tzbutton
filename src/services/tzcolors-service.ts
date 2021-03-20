@@ -3,9 +3,9 @@ import axios, { AxiosError } from 'axios'
 import BigNumber from 'bignumber.js'
 
 import colorsJSON from '../colors.json'
-import { TZCOLORS_CONTRACT } from '../constants'
+import { NODE_URL, TZCOLORS_CONTRACT } from '../constants'
 
-const Tezos = new TezosToolkit('https://tezos-node.prod.gke.papers.tech/')
+const Tezos = new TezosToolkit(NODE_URL)
 
 export interface Colors {
     token_id: number
@@ -47,8 +47,8 @@ export const fetchColors = async (address: string): Promise<void> => {
     const fakeSignature: string = 'sigUHx32f9wesZ1n2BWpixXz4AQaZggEtchaQNHYGRCoWNAXx45WGW2ua3apUUUAGMLPwAU41QoaFCzVSL61VaessLg4YbbP'
 
     const results = await Promise.all([
-        axios.get(`https://tezos-node.prod.gke.papers.tech/chains/main/blocks/head/context/contracts/${address}/counter`),
-        axios.get<{ chain_id: string, hash: string }>(`https://tezos-node.prod.gke.papers.tech/chains/main/blocks/head`),
+        axios.get(`${NODE_URL}/chains/main/blocks/head/context/contracts/${address}/counter`),
+        axios.get<{ chain_id: string, hash: string }>(`${NODE_URL}/chains/main/blocks/head`),
     ])
 
     const counter = new BigNumber(results[0].data).plus(1)
@@ -74,7 +74,7 @@ export const fetchColors = async (address: string): Promise<void> => {
     }
 
     const response: any = await axios
-        .post(`https://tezos-node.prod.gke.papers.tech/chains/main/blocks/head/helpers/scripts/run_operation`, body, {
+        .post(`${NODE_URL}/chains/main/blocks/head/helpers/scripts/run_operation`, body, {
             headers: { 'Content-Type': 'application/json' }
         })
         .catch((runOperationError: AxiosError) => {
