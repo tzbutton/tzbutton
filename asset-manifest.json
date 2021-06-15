@@ -5,11 +5,11 @@
     "main.js.map": "/static/js/main.b0889127.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.e1f31f5e.js",
     "runtime-main.js.map": "/static/js/runtime-main.e1f31f5e.js.map",
-    "static/js/2.14c81dba.chunk.js": "/static/js/2.14c81dba.chunk.js",
-    "static/js/2.14c81dba.chunk.js.map": "/static/js/2.14c81dba.chunk.js.map",
+    "static/js/2.76f6834b.chunk.js": "/static/js/2.76f6834b.chunk.js",
+    "static/js/2.76f6834b.chunk.js.map": "/static/js/2.76f6834b.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.b7af2322.chunk.css.map": "/static/css/main.b7af2322.chunk.css.map",
-    "static/js/2.14c81dba.chunk.js.LICENSE.txt": "/static/js/2.14c81dba.chunk.js.LICENSE.txt",
+    "static/js/2.76f6834b.chunk.js.LICENSE.txt": "/static/js/2.76f6834b.chunk.js.LICENSE.txt",
     "static/media/airgap-logo.7bc5d0c0.svg": "/static/media/airgap-logo.7bc5d0c0.svg",
     "static/media/beacon-logo.3b27d329.svg": "/static/media/beacon-logo.3b27d329.svg",
     "static/media/kukai-logo.b7384935.svg": "/static/media/kukai-logo.b7384935.svg",
@@ -18,7 +18,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.e1f31f5e.js",
-    "static/js/2.14c81dba.chunk.js",
+    "static/js/2.76f6834b.chunk.js",
     "static/css/main.b7af2322.chunk.css",
     "static/js/main.b0889127.chunk.js"
   ]
