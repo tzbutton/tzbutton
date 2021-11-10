@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://tzbutton.io",
   "dependencies": {
-    "@airgap/beacon-sdk": "2.3.5",
+    "@airgap/beacon-sdk": "2.3.7",
     "@chakra-ui/core": "^1.0.0-rc.0",
     "@chakra-ui/theme": "^1.0.0-rc.0",
     "@taquito/beacon-wallet": "10.2.1",
