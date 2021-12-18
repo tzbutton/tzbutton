@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 
-export const NODE_URL = 'https://mainnet.smartpy.io'
+export const NODE_URL = 'https://tezos-node.prod.gke.papers.tech'
 
 export const TZBUTTON_CONTRACT: string = 'KT1H28iie4mW9LmmJeYLjH6zkC8wwSmfHf5P'
 export const TZBUTTON_AMOUNT_MUTEZ: string = '200000'
